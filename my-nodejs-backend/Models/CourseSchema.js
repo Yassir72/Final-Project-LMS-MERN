@@ -6,6 +6,6 @@ const CourseSchema = new mongoose.Schema({
     Prix: { type: String, required: true },
 }, { timestamps: true })
 
-const CorseModel= new mongoose.model('Course', CourseSchema)
+const CourseModel= new mongoose.model('Course', CourseSchema)
 
-module.exports = CorseModel;
+module.exports = CourseModel;
