@@ -1,11 +1,14 @@
+require("dotenv").config();
 const express = require("express");
-const app = express;
+const app = express();
+
+
+
+app.use(express.json())
 
 
 
 
-
-
-app.listen(4000,()=>{
+app.listen(process.env.Port,()=>{
     console.log("The server is running");
 })
