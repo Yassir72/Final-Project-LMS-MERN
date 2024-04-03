@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const studentSchema=new mongoose.Schema({
+const StudentSchema=new mongoose.Schema({
     name: {type:String, required:true},
     email: {type:String ,required:true ,unique:true},
     username : {type:String, required:true},
@@ -10,6 +10,6 @@ const studentSchema=new mongoose.Schema({
 },
     { timestamps : true })
 
-    const studentModel = new mongoose.model('Student',studentSchema)
+    const StudentModel = new mongoose.model('Student',StudentSchema)
 
-    module.exports=studentModel;
+    module.exports=StudentModel;
