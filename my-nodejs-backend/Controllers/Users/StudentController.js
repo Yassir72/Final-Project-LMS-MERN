@@ -37,3 +37,33 @@ exports.logout = (req, res) => {
     res.clearCookie('jwtToken');
     res.json({ message: 'Logged out successfully' });
 };
+
+exports.updateStudent = (req,res)=>{
+    const {id}=req.params;
+    const{name,email,password,username,phoneNumber}=req.body;
+    const updatedStudent = StudentModel.findByIdAndUpdate(
+        id,
+        { name, email, password, username, phoneNumber }
+    );
+    
+    if(!updatedStudent){
+        res.status(404).json({message:"Student not found !"})
+        console.log('Cannot find user !');
+    }
+        
+        res.json(updatedStudent);
+        console.log('Student updated !')
+}
+
+exports.deleteStudent = (req,res)=>{
+    const{id}=req.params;
+    const deletedstudent= StudentModel.findByIdAndDelete(id);
+    
+    if(!deletedstudent){
+        res.status(404).json({message:"Student not found !"})
+    }
+
+    res.json({message:'Student deleted !',deletedstudent})
+    console.log('Student deleted successfully !')
+
+}
