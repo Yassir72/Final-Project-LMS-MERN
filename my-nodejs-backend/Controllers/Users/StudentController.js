@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {StudentModel} = require("../../Models/StudentSchema")
+const StudentModel = require("../../Models/StudentSchema")
 
 
 exports.register= (req,res)=>{
