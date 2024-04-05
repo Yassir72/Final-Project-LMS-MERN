@@ -43,7 +43,7 @@ exports.updateStudent = (req,res)=>{
     const{name,email,password,username,phoneNumber}=req.body;
     const updatedStudent = StudentModel.findByIdAndUpdate(
         id,
-        { name, email, password, username, phoneNumber }
+        {$set : { name, email, password, username, phoneNumber }}
     );
     
     if(!updatedStudent){
