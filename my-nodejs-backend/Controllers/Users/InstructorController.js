@@ -1,43 +1,52 @@
-const mongoose = require('mongoose');
-const InstructorModel = require("../../Models/InstructorSchema")
+const InstructorModel = require("../../Models/InstructorSchema");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 
 const SignUp = async (req, res) => {
     try {
         const { name, email, password, phonenumber, specialite, username } = req.body;
-        console.log(name);
-        const existInstructor = await InstructorModel.findOne({ email: email });
 
+        const existInstructor = await InstructorModel.findOne({ email: email });
         if (existInstructor) {
             return res.status(401).send("Instructor already exists!");
-        } else {
-            const newUser = await InstructorModel.create({
-                name,
-                email,
-                password,
-                phonenumber,
-                specialite,
-                username
-            });
-            return res.status(201).json(newUser);
         }
+
+        const hashPassword = await bcrypt.hash(password, 10);
+
+        const newUser = await InstructorModel.create({
+            name,
+            email,
+            password : hashPassword ,
+            phonenumber,
+            specialite,
+            username
+        });
+
+        return res.status(201).json(newUser);
     } catch (err) {
         console.error(err);
         return res.status(500).send("Server Error");
     }
 }
 
-
 const SignIn = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const Instructor = await InstructorModel.findOne({ email: email, password: password });
 
-        if (!Instructor) {
+        const instructor = await InstructorModel.findOne({ email: email });
+        if (!instructor) {
             return res.status(401).send("Instructor not found");
-        } else {
-            return res.status(200).json({ message: "Login successful" });
-
         }
+        
+        const validPassword = await bcrypt.compare(password, instructor.password);
+        if (!validPassword) {
+            return res.status(401).send("Password incorrect" );
+        }
+        
+        const token = jwt.sign({ instructor: instructor.id }, (process.env.SECRET_KEY), { expiresIn: '1h' });
+        res.status(200).json({ message: "Login successful", token : token });
     } catch (err) {
         res.status(500).json({ message: "Server Error" });
     }
