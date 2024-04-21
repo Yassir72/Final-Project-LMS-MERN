@@ -52,22 +52,7 @@ const logout = (req, res) => {
     res.json({ message: 'Logged out successfully' });
 };
 
-const updateStudent = async (req, res) => {
-    const { id } = req.params;
-    const { firstname, lastname, email, password, username, phoneNumber } = req.body;
-    const updatedStudent =await StudentModel.findByIdAndUpdate(
-        id,
-        { firstname, lastname, email, password, username, phoneNumber }
-    );
 
-    if (!updatedStudent) {
-        res.status(404).json({ message: "Student not found !" })
-        console.log('Cannot find user !');
-    }
-
-    res.json(updatedStudent);
-    console.log('Student updated !')
-}
 
 const deleteStudent = async (req, res) => {
     const { id } = req.params;
