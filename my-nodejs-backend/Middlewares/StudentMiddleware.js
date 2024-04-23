@@ -1,6 +1,6 @@
-const { body, validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken')
-require("dotenv").config()
+const jwt=require('jsonwebtoken');
+const {body,validationResult}=require('express-validator');
+require('dotenv').config();
 
 const validation = [
     body('email').isEmail().withMessage("Invalid email").normalizeEmail(),
@@ -33,5 +33,3 @@ const auth = (req, res, next) => {
 };
 
 module.exports = { validation, auth };
-
-
