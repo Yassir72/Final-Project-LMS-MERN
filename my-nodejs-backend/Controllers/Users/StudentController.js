@@ -2,15 +2,16 @@ const mongoose = require('mongoose');
 const StudentModel = require("../../Models/StudentSchema")
 
 
-exports.register= (req,res)=>{
-      const{name,email,password,username,phoneNumber}=req.body;
+const register= (req,res)=>{
+      const{firstname,lastname,email,password,username,phoneNumber}=req.body;
       const existingUser=StudentModel.findOne({email:email})
       if(existingUser){
         res.json({message: 'Email already exists !'})
         console.log('Student already exists')
       }else{
         const newStudent= StudentModel.create({
-            name : name,
+            firstname : firstname,
+            lastname : lastname,
             email: email,
             password: password,
             username: username,
@@ -21,7 +22,7 @@ exports.register= (req,res)=>{
       }
 }
 
-exports.login=(req,res)=>{
+const login=(req,res)=>{
     const{email,password}=req.body;
     const student= StudentModel.findOne({email,password});
     if(student){
@@ -33,17 +34,17 @@ exports.login=(req,res)=>{
     }
 }
 
-exports.logout = (req, res) => {
+const logout = (req, res) => {
     res.clearCookie('jwtToken');
     res.json({ message: 'Logged out successfully' });
 };
 
-exports.updateStudent = (req,res)=>{
+const updateStudent = (req,res)=>{
     const {id}=req.params;
-    const{name,email,password,username,phoneNumber}=req.body;
+    const{firstname,lastname,email,password,username,phoneNumber}=req.body;
     const updatedStudent = StudentModel.findByIdAndUpdate(
         id,
-        {$set : { name, email, password, username, phoneNumber }}
+        {$set : { firstname, lastname, email, password, username, phoneNumber }}
     );
     
     if(!updatedStudent){
@@ -55,7 +56,7 @@ exports.updateStudent = (req,res)=>{
         console.log('Student updated !')
 }
 
-exports.deleteStudent = (req,res)=>{
+const deleteStudent = (req,res)=>{
     const{id}=req.params;
     const deletedstudent= StudentModel.findByIdAndDelete(id);
     
@@ -67,3 +68,5 @@ exports.deleteStudent = (req,res)=>{
     console.log('Student deleted successfully !')
 
 }
+
+module.exports={login,register,logout,updateStudent,deleteStudent}

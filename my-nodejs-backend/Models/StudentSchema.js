@@ -2,7 +2,6 @@ const mongoose=require('mongoose');
 require("../Config/Database.js")
 
 const StudentSchema=new mongoose.Schema({
-    name: {type:String, required:true},
     firstname: {type:String, required:true},
     lastname: {type: String, required:true},
     email: {type:String ,required:true ,unique:true},
