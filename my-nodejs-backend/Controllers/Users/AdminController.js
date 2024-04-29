@@ -61,9 +61,10 @@ const deleteAdmin = async (req, res) => {
             .catch((err) => res.send(err))
     }
 
-const getAllAdmins = async (req, res) => {
+const getAllAdmins = async (req, res) => { 
         try {
             const Admins = await AdminModel.find();
+            console.log(Admins);
             res.send(Admins);
     
         } catch (err) {
