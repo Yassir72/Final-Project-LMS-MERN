@@ -45,6 +45,7 @@ const StatisticsCards = () => {
     const fetchData = async () => {
       try {
         const studentsResponse = await axios.get("http://localhost:3000/getStudents");
+        console.log(studentsResponse)
         const adminres = await axios.get("http://localhost:3000/admin/getAdmins");
         const instructorRes = await axios.get("http://localhost:3000/instructor/getInstructors");
         const courseRes = await axios.get("http://localhost:3000/course/getCourses");

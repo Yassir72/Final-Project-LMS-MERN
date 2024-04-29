@@ -23,7 +23,7 @@ import axios from 'axios';
 
 export const getadmins = createAsyncThunk('admin/getadmins', async ()=>{
     try{
-        const res = await axios.get('http://localhost:4005/ad/getAdmins');
+        const res = await axios.get('http://localhost:3000/admin/getAdmins');
         const data = res.data;
         console.log("aa");
         return data;

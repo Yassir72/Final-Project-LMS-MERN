@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getAdmins } from '../admin/slice';
 
 
-const alladminsURL = 'http://localhost:4005/getAdmins'
+const alladminsURL = 'http://localhost:3000/getAdmins'
 
 export async function getAllAdmins(dispatch){
     try{const admins = await axios.get(alladminsURL);

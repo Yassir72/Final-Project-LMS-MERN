@@ -72,6 +72,7 @@ const Coursestable = () => {
           const fetchedCourse = fetchedCourses[index]; // Get corresponding fetched course
           return {
             ...project,
+            img: fetchedCourse.Image || project.img,
             name: fetchedCourse.Title || project.name, // Replace name with fetched title, or keep original
             budget: fetchedCourse.Price || project.budget, // Replace budget with fetched price, or keep original
             completion: fetchedCourse.Description || project.completion, // Replace completion with fetched description, or keep original
