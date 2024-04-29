@@ -1,4 +1,5 @@
 require("../Config/Database.js")
+const mongoose=require('mongoose');
 
 const StudentSchema=new mongoose.Schema({
     firstname: {type:String, required:true},
@@ -12,3 +13,5 @@ const StudentSchema=new mongoose.Schema({
     { timestamps : true })
 
     const StudentModel = new mongoose.model('Student',StudentSchema);
+
+    module.exports=StudentModel

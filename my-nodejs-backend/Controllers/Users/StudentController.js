@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const StudentModel = require("../../Models/StudentSchema")
-const bcrypt=require('bcrypt');
+// const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 
 const register = async (req, res) => {
@@ -54,17 +54,35 @@ const logout = (req, res) => {
 const updateStudent = async (req, res) => {
     const { id } = req.params;
     const { firstname, lastname, email, password, username, phoneNumber } = req.body;
-    const updatedStudent =await StudentModel.findByIdAndUpdate(
-        id,
-    );
     
-    if (!updatedStudent) {
-        res.status(404).json({ message: "Student not found !" })
-        console.log('Cannot find user !');
+    // Build the update object
+    const updateObj = {};
+    if (firstname) updateObj.firstname = firstname;
+    if (lastname) updateObj.lastname = lastname;
+    if (email) updateObj.email = email;
+    if (password) updateObj.password = password;
+    if (username) updateObj.username = username;
+    if (phoneNumber) updateObj.phoneNumber = phoneNumber;
+
+    try {
+        // Find the student by id and update with the update object
+        const updatedStudent = await StudentModel.findByIdAndUpdate(id, updateObj, { new: true });
+
+        if (!updatedStudent) {
+            res.status(404).json({ message: "Student not found !" });
+            console.log('Cannot find user !');
+            return; // Return to avoid further execution
+        }
+
+        res.json(updatedStudent);
+        console.log('Student updated !');
+    } catch (error) {
+        // Handle any potential errors
+        console.error('Error updating student:', error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-    res.json(updatedStudent);
-    console.log('Student updated !')
 }
+
 
 const deleteStudent = async (req, res) => {
     const { id } = req.params;
@@ -81,10 +99,10 @@ const deleteStudent = async (req, res) => {
 const getStudents = async (req, res) => {
     const allStudents = await StudentModel.find();
     if (allStudents) {
-        res.json({ message: 'This is the list of all students :', allStudents })
+       return res.json({ message: 'This is the list of all students :', allStudents })
         console.log('Students fetched successfully !');
     }
-    res.status(404).json(error)
+    return res.status(404).json("Error 404!")
     console.log('Error fetching students !')
 }
 
