@@ -16,7 +16,7 @@ function signIn(req,res){
     }
 
 const addAdmin = async (req, res) => {
-        try {
+        try { 
             const { Name, Email, Password } = req.body;
             const existAdmin = await AdminModel.findOne({ Email: Email });
     
@@ -54,17 +54,15 @@ const UpdateAdmin = async (req, res) => {
     
     
 const deleteAdmin = async (req, res) => {
-        const id = req.params.id;
-    
-        const admin = await InstructorModel.deleteOne({ id: id })
-            .then((admin) => res.send(admin))
+            console.log(req.body.id);
+        await AdminModel.deleteOne({ _id: req.body.id })
+            .then((admin) => {res.send(admin);})
             .catch((err) => res.send(err))
     }
 
 const getAllAdmins = async (req, res) => { 
         try {
             const Admins = await AdminModel.find();
-            console.log(Admins);
             res.send(Admins);
     
         } catch (err) {

@@ -4,7 +4,7 @@ const Router= require('express').Router()
 Router.post('/register',SignUp);
 Router.post('/login',SignIn);
 Router.put('/updateInstructor',UpdateInstructor);
-Router.delete('/deleteInstructor',deleteInstructor);
+Router.post('/deleteInstructor',deleteInstructor);
 Router.get('/getInstructors',getAllInstructor);
 Router.get('/getInstructor:id',getInstructorById);
 

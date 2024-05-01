@@ -85,8 +85,8 @@ const updateStudent = async (req, res) => {
 
 
 const deleteStudent = async (req, res) => {
-    const { id } = req.params;
-    const deletedstudent = await StudentModel.findByIdAndDelete(id);
+
+    const deletedstudent = await StudentModel.findByIdAndDelete(req.body.id);
 
     if (!deletedstudent) {
         res.status(404).json({ message: "Student not found !" })
@@ -99,7 +99,7 @@ const deleteStudent = async (req, res) => {
 const getStudents = async (req, res) => {
     const allStudents = await StudentModel.find();
     if (allStudents) {
-       return res.json({ message: 'This is the list of all students :', allStudents })
+       return res.send(allStudents)
         console.log('Students fetched successfully !');
     }
     return res.status(404).json("Error 404!")
@@ -114,7 +114,7 @@ const getStudentById =async (req, res) => {
         res.status(404).json(error);
         console.log('Student not found !');
     }
-    res.json({ message: 'The student is :', student })
+    res.json(   student)
     console.log('Student fetched successfully !');
 }
 

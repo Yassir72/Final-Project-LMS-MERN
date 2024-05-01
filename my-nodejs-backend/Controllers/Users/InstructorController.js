@@ -74,9 +74,8 @@ const UpdateInstructor = async (req, res) => {
 
 
 const deleteInstructor = async (req, res) => {
-    const id = req.params.id;
 
-    const Instructor = await InstructorModel.deleteOne({ id: id })
+    await InstructorModel.deleteOne({ _id: req.body.id })
         .then((Instructor) => res.send(Instructor))
         .catch((err) => res.send(err))
 }

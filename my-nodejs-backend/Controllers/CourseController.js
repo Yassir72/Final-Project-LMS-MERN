@@ -65,10 +65,9 @@ const updateCourse = async (req,res)=>{
 }
 
 const deleteCourse = async (req,res)=>{
-    const id = req.params.id;
-
-    const course = await CourseModel.deleteOne({ id: id })
-        .then((course) => res.send(course))
+    console.log(req.body.id);
+        await CourseModel.deleteOne({ _id: req.body.id })
+        .then((course) => {res.send(course);})
         .catch((err) => res.send(err))
 }
 
