@@ -14,11 +14,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getadmins, deleteAdmin } from '@/redux/admin/slice'
 import AddAdmin from "./addAdmin";
+import EditAdmin from "./editAdmin";
 
   
   export function Admins() {
     const dispatch  = useDispatch();
     const [addCard,setAddCard] = useState(false);
+    const [editCard,setEditCard] = useState(false);
     const {admins , isloading} = useSelector((state)=>state.admins);
       
       useEffect(()=>{
@@ -29,8 +31,12 @@ import AddAdmin from "./addAdmin";
         dispatch(deleteAdmin(id));
       }
 
-      function hideCard(){
+      function hideAddCard(){
         setAddCard(false);
+      }
+
+      function hideEditCard(){
+        setEditCard(false);
       }
 
       function post_date(date1){
@@ -134,6 +140,7 @@ import AddAdmin from "./addAdmin";
                             as="a"
                             href="#"
                             className="text-xs font-semibold text-green-500"
+                            onClick={()=>setEditCard(true)}
                           >
                             Edit
                           </Typography>
@@ -156,7 +163,8 @@ import AddAdmin from "./addAdmin";
             </table>
           </CardBody>
         </Card>
-        {addCard && <AddAdmin show={hideCard}/>}
+        {addCard && <AddAdmin show={hideAddCard}/>}
+        {editCard && <EditAdmin show={hideEditCard}/> }
       </div>
 
     );
