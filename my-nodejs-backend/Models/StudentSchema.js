@@ -1,6 +1,5 @@
 require("../Config/Database.js")
-const mongoose=require('mongoose');
-
+const mongoose = require('mongoose');
 const StudentSchema=new mongoose.Schema({
     firstname: {type:String, required:true},
     lastname: {type: String, required:true},
@@ -14,4 +13,4 @@ const StudentSchema=new mongoose.Schema({
 
     const StudentModel = new mongoose.model('Student',StudentSchema);
 
-    module.exports=StudentModel
+    module.exports = StudentModel

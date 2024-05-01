@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getStudents = createAsyncThunk('student/getStudents', async ()=>{
     try{
-        const res = await axios.get('http://localhost:4005/student/getStudents');
+        const res = await axios.get('http://localhost:3000/student/getStudents');
         const data = res.data;
         return data;
     } catch (error) {
@@ -13,7 +13,7 @@ export const getStudents = createAsyncThunk('student/getStudents', async ()=>{
 
 export const deleteStudent = createAsyncThunk('student/deleteStudent', async (id, { rejectWithValue }) => {
 
-    return await axios.post('http://localhost:4005/student/deleteStudent', { id })
+    return await axios.post('http://localhost:3000/student/deleteStudent', { id })
         .then(() => {
             return id
         })

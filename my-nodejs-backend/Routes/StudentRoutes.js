@@ -1,5 +1,5 @@
 const {register,login,logout,deleteStudent,updateStudent,getStudents,getStudentById} = require('../Controllers/Users/StudentController') 
-const Router=require('express').Router();
+const Router = require('express').Router();
 
 Router.post('/register',register);
 Router.post('/login',login);
@@ -10,4 +10,4 @@ Router.get('/getStudents',getStudents);
 Router.get('/getStudent:id',getStudentById);
 
 
-module.exports=Router;
+module.exports = Router;

@@ -23,7 +23,7 @@ import axios from 'axios';
 
 export const getadmins = createAsyncThunk('admin/getadmins', async () => {
     try {
-        const res = await axios.get('http://localhost:4005/admin/getAdmins');
+        const res = await axios.get('http://localhost:3000/admin/getAdmins');
         const data = res.data;
         return data;
     } catch (error) {
@@ -33,7 +33,7 @@ export const getadmins = createAsyncThunk('admin/getadmins', async () => {
 
 export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, Password})=>{
     try { console.log("name :" ,Name);
-        const res = await axios.post('http://localhost:4005/admin/addAdmin', {Name ,Email , Password})
+        const res = await axios.post('http://localhost:3000/admin/addAdmin', {Name ,Email , Password})
         return res.data;
     } catch (error) {
         console.log(error);
@@ -42,7 +42,7 @@ export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, P
 
 export const deleteAdmin = createAsyncThunk('admin/deleteAdmin', async (id, { rejectWithValue }) => {
 
-    return await axios.post('http://localhost:4005/admin/delAdmin', { id })
+    return await axios.post('http://localhost:3000/admin/delAdmin', { id })
         .then(() => {
             return id
         })
