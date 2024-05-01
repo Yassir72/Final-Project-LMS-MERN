@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const getinstructors = createAsyncThunk('instructor/getinstructors', async ()=>{
     try{
-        const res = await axios.get('http://localhost:4005/instructor/getInstructors');
+        const res = await axios.get('http://localhost:3000/instructor/getInstructors');
         const data = res.data;
         return data;
     } catch (error) {
@@ -14,7 +14,7 @@ export const getinstructors = createAsyncThunk('instructor/getinstructors', asyn
 
 export const deleteInstructor = createAsyncThunk('instructor/deleteInstructor', async (id, { rejectWithValue }) => {
 
-    return await axios.post('http://localhost:4005/instructor/deleteInstructor', { id })
+    return await axios.post('http://localhost:3000/instructor/deleteInstructor', { id })
         .then(() => {
             return id
         })

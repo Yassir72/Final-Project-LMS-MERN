@@ -61,8 +61,8 @@ export const routes = [
         element: <Notifications />,
       },
     ],
+    
   }
-  
 ];
 
 export default routes;

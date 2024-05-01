@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors")
 const app = express();
 
 const studentrouter=require('./Routes/StudentRoutes');
-const cors=require('cors')
 const adminRouter=require('./Routes/AdminRoutes');
 const insRouter=require('./Routes/InstructorRoutes');
 const courseRouter=require('./Routes/CourseRoutes');
@@ -24,4 +24,4 @@ app.use('/course',courseRouter)
 
 app.listen(process.env.Port,()=>{
     console.log("The server is running");
-})
+});
