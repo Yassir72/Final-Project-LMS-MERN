@@ -1,13 +1,15 @@
-const {signIn,addAdmin,UpdateAdmin,deleteAdmin,getAllAdmins}=require('../Controllers/Users/AdminController');
-const Router = require('express').Router();
+const {signIn,addAdmin,UpdateAdmin,deleteAdmin,getAllAdmins} = require('../Controllers/Users/AdminController');
+const {auth,validation} = require('../Middlewares/authMiddlware')
+const RouterAdmin = require('express').Router();
 
-Router.get('/getAdmins',getAllAdmins);
-Router.get('/signIn',getAllAdmins);
-Router.post('/addAdmin',addAdmin);
-Router.delete('/delAdmin',deleteAdmin);
-Router.put('/updateAdmin',UpdateAdmin);
+RouterAdmin.get('/getAdmins', getAllAdmins);
+RouterAdmin.post('/login', signIn);
+RouterAdmin.post('/addAdmin',auth, addAdmin);
+RouterAdmin.delete('/delAdmin',auth, deleteAdmin);
+RouterAdmin.put('/updateAdmin',auth, UpdateAdmin);
 
 
+module.exports = RouterAdmin
 
 
 
