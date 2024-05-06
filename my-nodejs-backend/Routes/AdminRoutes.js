@@ -4,9 +4,9 @@ const Router = require('express').Router();
 
 Router.get('/getAdmins', getAllAdmins);
 Router.post('/login', signIn);
-Router.post('/addAdmin',auth, addAdmin);
-Router.delete('/delAdmin',auth, deleteAdmin);
-Router.put('/updateAdmin',auth, UpdateAdmin);
+Router.post('/addAdmin', addAdmin);
+Router.post('/delAdmin', deleteAdmin);
+Router.put('/updateAdmin', UpdateAdmin);
 
 module.exports=Router;
 

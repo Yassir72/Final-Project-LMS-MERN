@@ -11,6 +11,17 @@ export const getStudents = createAsyncThunk('student/getStudents', async ()=>{
     }
 });
 
+export const addStudent = createAsyncThunk('student/addStudent', async(
+    {firstname, lastname, email,username,password,phoneNumber})=>{
+    try { 
+        const res = await axios.post('http://localhost:3000/student/register', 
+        {firstname, lastname, email,username,password,phoneNumber})
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 export const deleteStudent = createAsyncThunk('student/deleteStudent', async (id, { rejectWithValue }) => {
 
     return await axios.post('http://localhost:3000/student/deleteStudent', { id })
@@ -51,6 +62,20 @@ const studentSlice = createSlice({
             state.error = false;
         })
         .addCase(deleteStudent.rejected, (state, action) => {
+            state.isloading = false;
+            state.error = action.error.message;
+        })
+    //Add Student
+        .addCase(addStudent.pending, (state) => {
+            state.isloading = true;
+            state.error = null;
+        })
+        .addCase(addStudent.fulfilled, (state, action) => {
+            state.students.push(action.payload);
+            state.isloading = false;
+            state.error = false;
+        })
+        .addCase(addStudent.rejected, (state, action) => {
             state.isloading = false;
             state.error = action.error.message;
         })

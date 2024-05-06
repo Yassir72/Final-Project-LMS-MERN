@@ -13,10 +13,12 @@ import { authorsTableData, projectsTableData } from "@/data";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getcourses , deleteCourse } from '@/redux/course/slice'
+import AddCourse from "./addCourse";
 // import store from "@/redux/store";
 
 
 export function Courses() {
+  const [addCard,setAddCard] = useState(false);
   const dispatch  = useDispatch();
   const {courses , isloading} = useSelector((state)=>state.courses);
     
@@ -26,6 +28,10 @@ export function Courses() {
 
     function deleteButton(id){
       dispatch(deleteCourse(id));
+    }
+
+    function hideAddCard(){
+      setAddCard(false);
     }
 
     function post_date(date1){
@@ -48,10 +54,11 @@ export function Courses() {
   return ( 
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
-        <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
+        <CardHeader variant="gradient" color="gray" className="mb-8 p-6 flex items-center justify-between">
           <Typography variant="h6" color="white">
             Courses Table
           </Typography>
+          <button type="button" onClick={()=>setAddCard(true)} className="px-2 py-1 font-semibold border rounded border-white-800 text-white-800">Add</button>
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
@@ -145,6 +152,7 @@ export function Courses() {
           </table>
         </CardBody>
       </Card>
+      {addCard && <AddCourse show={hideAddCard}/>}
     </div>
   );
 }

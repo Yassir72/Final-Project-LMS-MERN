@@ -27,10 +27,10 @@ const getCourseById = async (req,res)=>{
 }
 
 const addCourse = async (req,res)=>{
-    try {
-        const { Title , Description , Price } = req.body;
+    try { console.log(req.body);
+        const { Title , Description , Price, Image } = req.body;
 
-        const existingCourse = await InstructorModel.findOne({ Title: Title });
+        const existingCourse = await CourseModel.findOne({ Title: Title });
         if (existingCourse) {
             return res.status(401).send("Course already exists!");
         }
@@ -38,7 +38,8 @@ const addCourse = async (req,res)=>{
         const newCourse = await CourseModel.create({
            Title,
            Description,
-           Price
+           Price,
+           Image
         });
 
         return res.status(201).json(newCourse);

@@ -1,4 +1,5 @@
 
+import AddInstructor from '@/pages/dashboard/Instructors/addInstructor';
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
 
@@ -11,6 +12,18 @@ export const getinstructors = createAsyncThunk('instructor/getinstructors', asyn
         console.log(error);
     }
 });
+
+export const addInstructor = createAsyncThunk('instructor/addInstructor', async(
+    {name, password, email, phonenumber,
+    specialite,username})=>{
+    try { 
+        const res = await axios.post('http://localhost:3000/instructor/addInstructor',
+        {name, password, email, phonenumber,specialite,username})
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 export const deleteInstructor = createAsyncThunk('instructor/deleteInstructor', async (id, { rejectWithValue }) => {
 
@@ -41,7 +54,7 @@ const instructorSlice = createSlice({
             state.isloading = false;
             state.error = action.error.message;
         })
-    //delete Admin
+    //delete Instructor
         .addCase(deleteInstructor.pending, (state) => {
             state.isloading = true;
             state.error = null;
@@ -55,6 +68,20 @@ const instructorSlice = createSlice({
             state.isloading = false;
             state.error = action.error.message;
         })
+    //Add Instructor
+            .addCase(addInstructor.pending, (state) => {
+                state.isloading = true;
+                state.error = null;
+            })
+            .addCase(addInstructor.fulfilled, (state, action) => {
+                state.instructors.push(action.payload);
+                state.isloading = false;
+                state.error = false;
+            })
+            .addCase(addInstructor.rejected, (state, action) => {
+                state.isloading = false;
+                state.error = action.error.message;
+            })
     }
 })
 
