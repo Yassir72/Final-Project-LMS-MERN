@@ -32,7 +32,7 @@ export const getadmins = createAsyncThunk('admin/getadmins', async () => {
 });
 
 export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, Password})=>{
-    try { console.log("name :" ,Name);
+    try { 
         const res = await axios.post('http://localhost:3000/admin/addAdmin', {Name ,Email , Password})
         return res.data;
     } catch (error) {
@@ -83,7 +83,7 @@ const adminSlice = createSlice({
                 state.isloading = false;
                 state.error = action.error.message;
             })
-        //delete Admin
+        //Add Admin
             .addCase(addAdmin.pending, (state) => {
                 state.isloading = true;
                 state.error = null;

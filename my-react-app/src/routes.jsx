@@ -6,7 +6,11 @@ import {
   ServerStackIcon,
   RectangleStackIcon,
 } from "@heroicons/react/24/solid";
-import { Home, Profile, Tables, Notifications,Admins, Students, Instructors, Courses } from "@/pages/dashboard";
+import { Home, Profile, Notifications} from "@/pages/dashboard";
+import { Admins } from "@/pages/dashboard/Admin/admins";
+import { Students } from "@/pages/dashboard/Students/students";
+import { Instructors } from "@/pages/dashboard/Instructors/instructors";
+import { Courses } from "@/pages/dashboard/Courses/courses";
 import { SignIn, SignUp } from "@/pages/auth";
 
 

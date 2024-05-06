@@ -64,7 +64,7 @@ const Coursestable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const courseRes = await axios.get("http://localhost:4005/course/getCourses");
+        const courseRes = await axios.get("http://localhost:3000/course/getCourses");
         const fetchedCourses = courseRes.data; // Assuming the response contains an array of course data
         
         // Update each project with fetched course data
@@ -72,6 +72,7 @@ const Coursestable = () => {
           const fetchedCourse = fetchedCourses[index]; // Get corresponding fetched course
           return {
             ...project,
+            img: fetchedCourse.Image || project.img,
             name: fetchedCourse.Title || project.name, // Replace name with fetched title, or keep original
             budget: fetchedCourse.Price || project.budget, // Replace budget with fetched price, or keep original
             completion: fetchedCourse.Description || project.completion, // Replace completion with fetched description, or keep original

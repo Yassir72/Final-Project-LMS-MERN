@@ -62,7 +62,7 @@ const bcrypt=require('bcrypt')
         
 
 
-const addAdmin = async (req, res) => {
+const addAdmin = async (req, res) => { 
         try { 
             const { Name, Email, Password } = req.body;
             const existAdmin = await AdminModel.findOne({ Email: Email });

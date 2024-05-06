@@ -12,20 +12,26 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getinstructors, deleteInstructor } from '@/redux/instructor/slice'
+import { getStudents, deleteStudent } from '@/redux/student/slice'
+import AddStudent from "./addStudent";
 // import store from "@/redux/store";
 
 
-export function Instructors() {
+export function Students() {
+  const [addCard,setAddCard] = useState(false);
   const dispatch  = useDispatch();
-  const {instructors , isloading} = useSelector((state)=>state.instructors);
+  const {students , isloading} = useSelector((state)=>state.students);
     
     useEffect(()=>{
-      dispatch(getinstructors()); 
+      dispatch(getStudents()); 
     },[dispatch])
 
     function deleteButton(id){
-      dispatch(deleteInstructor(id));
+      dispatch(deleteStudent(id));
+    }
+
+    function hideAddCard(){
+      setAddCard(false);
     }
 
     function post_date(date1){
@@ -48,10 +54,11 @@ export function Instructors() {
   return ( 
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
-        <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
+        <CardHeader variant="gradient" color="gray" className="mb-8 p-6 flex items-center justify-between">
           <Typography variant="h6" color="white">
-            Instructors Table
+            Students Table
           </Typography>
+          <button type="button" onClick={()=>setAddCard(true)} className="px-2 py-1 font-semibold border rounded border-white-800 text-white-800">Add</button>
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
@@ -73,8 +80,8 @@ export function Instructors() {
               </tr>
             </thead>
             <tbody>
-              { instructors.map(
-                ({ name, email, phonenumber,_id, createdAt }, key) => {
+              { students.map(
+                ({ firstname,lastname, email, phoneNumber, _id, createdAt }, key) => {
                   const className = `py-3 px-5 ${
                     key === authorsTableData.length - 1
                       ? ""
@@ -85,14 +92,14 @@ export function Instructors() {
                     <tr key={email}>
                       <td className={className}>
                         <div className="flex items-center gap-4">
-                          <Avatar src='../../public/img/icons8-student-52.png' alt={name} size="sm" variant="rounded" />
+                          <Avatar src='../../public/img/icons8-student-52.png' alt={firstname+lastname} size="sm" variant="rounded" />
                           <div>
                             <Typography 
                               variant="small"
                               color="blue-gray"
                               className="font-semibold"
                             >
-                              {name}
+                              {firstname} {lastname}
                             </Typography>
                             <Typography className="text-xs font-normal text-blue-gray-500">
                               {email}
@@ -102,7 +109,7 @@ export function Instructors() {
                       </td>
                       <td className={className}>
                         <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {phonenumber}
+                          {phoneNumber}
                         </Typography>
                         {/* <Typography className="text-xs font-normal text-blue-gray-500">
                           {Email}
@@ -137,7 +144,7 @@ export function Instructors() {
                           as="a"
                           href="#"
                           className="text-xs font-semibold text-red-500"
-                          onClick={()=>{deleteButton(_id)}}
+                          onClick={()=>{ deleteButton(_id) }}
                         >
                           Delete
                         </Typography>
@@ -150,8 +157,9 @@ export function Instructors() {
           </table>
         </CardBody>
       </Card>
+      {addCard && <AddStudent show={hideAddCard}/>}
     </div>
   );
 }
 
-export default Instructors;
+export default Students;

@@ -44,12 +44,12 @@ const StatisticsCards = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const studentsResponse = await axios.get("http://localhost:4005/student/getStudents");
-        const adminres = await axios.get("http://localhost:4005/admin/getAdmins");
-        const instructorRes = await axios.get("http://localhost:4005/instructor/getInstructors");
-        const courseRes = await axios.get("http://localhost:4005/course/getCourses");
+        const studentsResponse = await axios.get("http://localhost:3000/student/getStudents");
+        const adminres = await axios.get("http://localhost:3000/admin/getAdmins");
+        const instructorRes = await axios.get("http://localhost:3000/instructor/getInstructors");
+        const courseRes = await axios.get("http://localhost:3000/course/getCourses");
 
-        const studentsCount = studentsResponse.data.allStudents.length;
+        const studentsCount = studentsResponse.data.length;
         const adminsCount = adminres.data.length;
         const insCount = instructorRes.data.length;
         const courseCount = courseRes.data.length;

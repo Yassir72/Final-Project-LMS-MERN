@@ -85,7 +85,7 @@ export function Profile() {
           <div className="mb-10 flex items-center justify-between flex-wrap gap-6">
             <div className="flex items-center gap-6">
               <Avatar
-                src="/img/bruce-mars.jpeg"
+                src="../../public/img/icons8-admin-52.png"
                 alt="bruce-mars"
                 size="xl"
                 variant="rounded"
@@ -93,7 +93,7 @@ export function Profile() {
               />
               <div>
                 <Typography variant="h5" color="blue-gray" className="mb-1">
-                  Richard Davis
+                  Khadija Rhaoufal
                 </Typography>
                 <Tooltip  content="Edit Photo">
                   <PencilIcon onClick={()=>loadImageFile()} className="h-4 w-4 cursor-pointer text-blue-gray-500" />

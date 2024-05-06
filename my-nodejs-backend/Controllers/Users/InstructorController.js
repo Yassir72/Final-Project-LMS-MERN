@@ -53,6 +53,28 @@ const SignIn = async (req, res) => {
 };
 
 
+const addInstructor = async (req,res)=>{
+    try { console.log(req.body);
+        const {name, password, email, phonenumber,specialite,username} = req.body;
+
+        const existingInstructor = await InstructorModel.findOne({ username: username });
+        if (existingInstructor) {
+            return res.status(401).send("User already exists!");
+        }
+
+        const newInstructor = await InstructorModel.create({
+            name, password, email, phonenumber,specialite,username
+        });
+
+        return res.status(201).json(newInstructor);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send("Server Error");
+    }
+}
+
+
+
 const UpdateInstructor = async (req, res) => {
     const id = req.params.id;
     const { name, email, password, phonenumber, specialite, username } = req.body
@@ -112,5 +134,5 @@ const getInstructorById = async (req, res) => {
 
 
 module.exports = {
-    SignUp, SignIn, UpdateInstructor, deleteInstructor, getAllInstructor,getInstructorById,
+    SignUp, SignIn, UpdateInstructor, deleteInstructor, getAllInstructor,getInstructorById, addInstructor
 }
