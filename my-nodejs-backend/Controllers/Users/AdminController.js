@@ -106,14 +106,12 @@ const addAdmin = async (req, res) => {
 
     
 const UpdateAdmin = async (req, res) => {
-        const id = req.params.id;
-        const { name, email, password } = req.body
-    
-        const Admin = await AdminModel.findOneAndUpdate({ id: id }, {
+        
+        const { id, name, email } = req.body
+        await AdminModel.findOneAndUpdate({ _id: id }, {
             $set: {
-                name: name,
-                email: email,
-                password: password,
+                Name: name,
+                Email: email,
             }
         },
             { new: true })

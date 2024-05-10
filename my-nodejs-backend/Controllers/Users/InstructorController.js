@@ -76,14 +76,13 @@ const addInstructor = async (req,res)=>{
 
 
 const UpdateInstructor = async (req, res) => {
-    const id = req.params.id;
-    const { name, email, password, phonenumber, specialite, username } = req.body
 
-    const Instructor = await InstructorModel.findOneAndUpdate({ id: id }, {
+    const { name, email, phonenumber, specialite, username, id } = req.body
+
+    await InstructorModel.findOneAndUpdate({ _id: id }, {
         $set: {
             name: name,
             email: email,
-            password: password,
             phonenumber: phonenumber,
             specialite: specialite,
             username: username

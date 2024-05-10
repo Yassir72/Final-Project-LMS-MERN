@@ -40,6 +40,16 @@ export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, P
     }
 })
 
+export const editAdmin = createAsyncThunk('admin/editAdmin',async({ name, email, id })=>{
+    try{ console.log("AAAA");
+        const res = await axios.put('http://localhost:3000/admin/updateAdmin',{ name, email, id });
+        console.log(res.data);
+        return res.data;
+    } catch(error) {
+        console.log(error);
+    }
+})
+
 export const deleteAdmin = createAsyncThunk('admin/deleteAdmin', async (id, { rejectWithValue }) => {
 
     return await axios.post('http://localhost:3000/admin/delAdmin', { id })
@@ -94,6 +104,19 @@ const adminSlice = createSlice({
                 state.error = false;
             })
             .addCase(addAdmin.rejected, (state, action) => {
+                state.isloading = false;
+                state.error = action.error.message;
+            })
+        //Edit Admin
+            .addCase(editAdmin.pending, (state,) => {
+                state.isloading = true;
+                state.error = null;
+            })
+            .addCase(editAdmin.fulfilled, (state, action) => {
+                state.isloading = false;
+                state.error = false;
+            })
+            .addCase(editAdmin.rejected, (state, action) => {
                 state.isloading = false;
                 state.error = action.error.message;
             })

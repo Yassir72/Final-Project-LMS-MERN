@@ -8,17 +8,20 @@ import {
   import { Link } from "react-router-dom";
   import { useEffect, useState } from "react";
   import {useSelector, useDispatch} from 'react-redux'
-  import {editAdmin} from '@/redux/admin/slice'
+  import {editInstructor} from '@/redux/instructor/slice'
 
 
-function EditAdmin({show,EditContent}){
+function EditInstructor({show,EditContent}){
    const dispatch = useDispatch();
-   const [email,setEmail] = useState(EditContent.Email);
-   const [name,setName] = useState(EditContent.Name);
+   const [name,setName] = useState(EditContent.name);
+   const [email,setEmail] = useState(EditContent.email);
+   const [phoneNumber,setPhoneNumber] = useState(EditContent.phonenumber);
+   const [speciality,setSpecialty] = useState(EditContent.specialite);
+   const [username,setUsername] = useState(EditContent.username);
 
 
-   function editButton(){ console.log(EditContent);
-      dispatch(editAdmin({id : EditContent._id, email: email, name : name}))
+   function editButton(email,name,phoneNumber,speciality,username){ console.log("email : ",email);
+      dispatch(editInstructor({id : EditContent._id, email: email, name : name, phonenumber : phoneNumber, specialite : speciality, username: username}))
    }
 
     return (
@@ -36,11 +39,20 @@ function EditAdmin({show,EditContent}){
             </div>
             <div class="px-5 pb-5">
 
-               <input placeholder="Name" id="Name" 
+            <input placeholder="Name" 
                value={name} onChange={(e)=>{setName(e.target.value)}}
                class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"/> 
-               <input placeholder="Email"  type="Email"
+               <input placeholder="UserName" 
+               value={username} onChange={(e)=>{setUsername(e.target.value)}}
+               class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"/> 
+               <input placeholder="Email" 
                value={email} onChange={(e)=>{setEmail(e.target.value)}}
+               class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"/> 
+                <input placeholder="Phone Number" 
+               value={phoneNumber} onChange={(e)=>{setPhoneNumber(e.target.value)}}
+               class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"/> 
+               <input placeholder="Speciality" 
+               value={speciality} onChange={(e)=>{setSpecialty(e.target.value)}}
                class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"/> 
                
             </div>
@@ -50,7 +62,7 @@ function EditAdmin({show,EditContent}){
             <hr class="mt-4"/>
             <div class="flex justify-center p-3">
                <div class="flex-initial pl-3">
-                  <button type="button" onClick={()=>{editButton(); show()}}
+                  <button type="button" onClick={()=>{editButton(email,name,phoneNumber,speciality,username); show()}}
                   class="flex items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize   bg-black rounded-md hover:bg-gray-800  focus:outline-none focus:bg-gray-900  transition duration-300 transform active:scale-95 ease-in-out">
                      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
                         <path d="M0 0h24v24H0V0z" fill="none"></path>
@@ -71,4 +83,4 @@ function EditAdmin({show,EditContent}){
       );
 }
 
-export default EditAdmin;
+export default EditInstructor;

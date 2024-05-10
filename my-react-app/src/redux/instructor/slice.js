@@ -25,6 +25,15 @@ export const addInstructor = createAsyncThunk('instructor/addInstructor', async(
     }
 })
 
+export const editInstructor = createAsyncThunk('instructor/editInstructor',async({id , email, name, phonenumber, specialite, username})=>{
+    try{
+        const res = await axios.put('http://localhost:3000/instructor/updateInstructor',{id , email, name, phonenumber, specialite, username});
+        return res.data;
+    } catch(error) {
+        console.log(error);
+    }
+})
+
 export const deleteInstructor = createAsyncThunk('instructor/deleteInstructor', async (id, { rejectWithValue }) => {
 
     return await axios.post('http://localhost:3000/instructor/deleteInstructor', { id })
@@ -82,6 +91,19 @@ const instructorSlice = createSlice({
                 state.isloading = false;
                 state.error = action.error.message;
             })
+    //Add Instructor
+        .addCase(editInstructor.pending, (state) => {
+            state.isloading = true;
+            state.error = null;
+        })
+        .addCase(editInstructor.fulfilled, (state, action) => {
+            state.isloading = false;
+            state.error = false;
+        })
+        .addCase(editInstructor.rejected, (state, action) => {
+            state.isloading = false;
+            state.error = action.error.message;
+        })
     }
 })
 
