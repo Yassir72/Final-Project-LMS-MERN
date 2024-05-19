@@ -6,6 +6,10 @@ const AdminSchema = new mongoose.Schema({
     Name : { type : String , required: true },
     Password : { type : String , required: true },
     Email : { type : String , required: true },
+    Phonenumber: { type: String},
+    Location : { type: String},
+    Resumer : { type: String},
+    Image : { type: String},
     role : { type: String, enum: ['Super Admin','Admin'] },
 }, { timestamps : true })
 

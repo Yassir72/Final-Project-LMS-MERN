@@ -42,7 +42,7 @@ export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, P
 
 export const editAdmin = createAsyncThunk('admin/editAdmin',async({ name, email, id })=>{
     try{ console.log("AAAA");
-        const res = await axios.put('http://localhost:3000/admin/updateAdmin',{ name, email, id });
+        const res = await axios.put('http://localhost:3000/admin/updateAdmin',{ name, email,id });
         console.log(res.data);
         return res.data;
     } catch(error) {
