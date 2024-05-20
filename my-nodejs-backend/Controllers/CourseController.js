@@ -26,20 +26,20 @@ const getCourseById = async (req,res)=>{
     }
 }
 
-const addCourse = async (req,res)=>{
-    try { console.log(req.body);
-        const { Title , Description , Price, Image } = req.body;
+const addCourse = async (req, res) => {
+    try {
+        const { Title, Description, Price, Image } = req.body;
 
-        const existingCourse = await CourseModel.findOne({ Title: Title });
-        if (existingCourse) {
-            return res.status(401).send("Course already exists!");
-        }
+        console.log(req.body);
 
+        
+
+        // Create a new course with the uploaded image URL and video URLs from Cloudinary
         const newCourse = await CourseModel.create({
-           Title,
-           Description,
-           Price,
-           Image
+            Image,
+            Title,
+            Description,
+            Price,
         });
 
         return res.status(201).json(newCourse);
@@ -47,8 +47,9 @@ const addCourse = async (req,res)=>{
         console.error(err);
         return res.status(500).send("Server Error");
     }
-}
+};
 
+<<<<<<< HEAD
 const updateCourse = async (req,res)=>{
     
     const { Title, Description, Price, Image, id } = req.body
@@ -59,18 +60,41 @@ const updateCourse = async (req,res)=>{
             Description: Description,
             Price: Price,
             Image: Image
+=======
+const updateCourse = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { Title, Description, Price , Image} = req.body
+        const updatedCourse = await CourseModel.findByIdAndUpdate(id, {
+            $set: {
+                Image,
+                Title,
+                Description,
+                Price,
+              
+            }
+        }, { new: true });
+
+        // Check if the course exists and return the updated course
+        if (!updatedCourse) {
+            return res.status(404).send("Course not found");
+>>>>>>> 021ce8041df96749d05361ad92700fc59a5e71ac
         }
-    },
-        { new: true })
-        .then((course) => res.send(course))
-        .catch((err) => res.send(err))
-}
+
+        // Send the updated course as response
+        res.json(updatedCourse);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send("Server Error");
+    }
+};
 
 const deleteCourse = async (req,res)=>{
     console.log(req.body.id);
         await CourseModel.deleteOne({ _id: req.body.id })
         .then((course) => {res.send(course);})
+
         .catch((err) => res.send(err))
 }
 
-module.exports={getCourses , getCourseById , addCourse , updateCourse , deleteCourse};
+module.exports={getCourses , getCourseById , addCourse , updateCourse , deleteCourse };

@@ -5,7 +5,7 @@ Router.post('/addCourse',addCourse)
 Router.put('/updateCourse',updateCourse);
 Router.post('/deleteCourse',deleteCourse);
 Router.get('/getCourses',getCourses);
-Router.get('/getCourse:id',getCourseById);
+Router.get('/getCourse/:id',getCourseById);
 
 
 module.exports=Router;
