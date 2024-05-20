@@ -49,40 +49,19 @@ const addCourse = async (req, res) => {
     }
 };
 
-<<<<<<< HEAD
 const updateCourse = async (req,res)=>{
-    
+    console.log(req.body);
     const { Title, Description, Price, Image, id } = req.body
-
+    try{
     const course = await CourseModel.findOneAndUpdate({ _id: id }, {
         $set: {
             Title: Title,
             Description: Description,
             Price: Price,
             Image: Image
-=======
-const updateCourse = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const { Title, Description, Price , Image} = req.body
-        const updatedCourse = await CourseModel.findByIdAndUpdate(id, {
-            $set: {
-                Image,
-                Title,
-                Description,
-                Price,
-              
-            }
-        }, { new: true });
-
-        // Check if the course exists and return the updated course
-        if (!updatedCourse) {
-            return res.status(404).send("Course not found");
->>>>>>> 021ce8041df96749d05361ad92700fc59a5e71ac
-        }
-
-        // Send the updated course as response
-        res.json(updatedCourse);
+        }   
+    })
+    res.json(course);
     } catch (err) {
         console.error(err);
         return res.status(500).send("Server Error");

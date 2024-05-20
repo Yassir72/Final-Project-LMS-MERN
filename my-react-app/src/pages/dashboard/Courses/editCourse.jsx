@@ -17,11 +17,51 @@ function EditCourse({show,EditContent}){
    const [title,setTitle] = useState(EditContent.Title);
    const [description,setDescription] = useState(EditContent.Description);
    const [price,setPrice] = useState(EditContent.Price);
+   
 
-
-   function editButton(){ 
-      dispatch(editCourse({id : EditContent._id, Title: title, Description : description, Price: price, Image: image}))
+   async function editButton(){ 
+      const secureUrl = await uploadImage(); // Call uploadImage function
+   if (secureUrl) {
+      dispatch(editCourse({id : EditContent._id, Title: title, Description : description, Price: price, Image: secureUrl}))
+    }
    }
+
+   const uploadImage = async () => {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "ciof6yzr");
+      data.append("cloud_name", "dxm05ueme");
+      data.append("folder", "Cloudinary-React");
+  
+      try {
+        const response = await fetch( 
+          "https://api.cloudinary.com/v1_1/dxm05ueme/image/upload",
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+        const responseData = await response.json(); // Parse response JSON
+        console.log("Cloudinary API Response:", responseData); // Log entire response
+        if (responseData && responseData.secure_url) {
+          // Check if secure_url is available in the response
+          return responseData.secure_url 
+          
+        }else {
+          console.error("Image upload failed: Secure URL not found in response");
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+    ;
+    const Handlerphoto = (event) => {
+      const file = event.target.files[0];
+      console.log(file)
+      setImage(file);
+  
+  
+    };
 
     return (
                 <div className="w-full h-full flex items-center justify-center fixed top-0 left-0 bg-gray-100 bg-opacity-70 inset-0 z-50 overflow-y-auto">
@@ -47,8 +87,8 @@ function EditCourse({show,EditContent}){
                <input placeholder="Price"  type="Email"
                value={price} onChange={(e)=>{setPrice(e.target.value)}}
                class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"/> 
-               <input placeholder="Image"  type="Email"
-               value={image} onChange={(e)=>{setImage(e.target.value)}}
+               <input name="Image"  type="file"
+               onChange={(e)=>{Handlerphoto(e)}}
                class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"/> 
                
             </div>
