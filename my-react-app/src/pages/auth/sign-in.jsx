@@ -1,53 +1,54 @@
+import React, { useState,useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axiosInstance from '../../API/axiosConfig'
 import {
-  Card,
   Input,
   Checkbox,
   Button,
   Typography,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
-import {useNavigate, Link } from "react-router-dom";
-import { useCookies } from 'react-cookie';
-import createAxiosInstance from '../../API/axiosConfig'
-
-
+import { Message } from 'primereact/message';
 export function SignIn() {
+  const errRef = useRef(null);
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [cookies, setCookie] = useCookies(['token']);
-  const  navigate = useNavigate();
+  const [errMsg, setErrMsg] = useState('');
+
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-        const axiosInstance = createAxiosInstance();
-        console.log(axiosInstance)
-        const { data } = await axiosInstance.post('/admin/login', {
-            Email,
-            Password
-        }, { withCredentials: true });
-        console.log("ttt");
-        console.log(data.token); 
-        setCookie('token', data.token);
-        console.log(cookies.token); 
-        navigate('/dashboard/home')
-    } catch (error) {
-        if (error.response) {
-            const { data } = error.response;
-            setError(data.message);
-        } else {
-            console.log(error);
-        }
-    }
+      const response = await axiosInstance.post("/admin/login", { Email,Password }, { withCredentials: true })
+      const token = response.data.token
+    
+      localStorage.setItem("token", token)
+      navigate("/dashboard/home ")
+    } catch (err) {
+      if (!err?.originalStatus) {
+        setErrMsg('No Server Response !!!');
+      } else if (err.originalStatus === 400) {
+        setErrMsg('Missing Username or Password !!!');
+      } else if (err.originalStatus === 401) {
+        setErrMsg('Unauthorized !!!');
+      } else {
+        setErrMsg('Login Failed !!!');
+      }
+      errRef.current.show();
+
+  }
+ 
   };
+
   return (
     <section className="m-8 flex gap-4">
-      <div className="w-full lg:w-3/5 mt-24">
-        <div className="text-center">
-          <Typography variant="h2" className="font-bold mb-4">Sign In</Typography>
-          <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your email and password to Sign In.</Typography>
-        </div>
+    <div className="w-full lg:w-3/5 mt-24">
+      <div className="text-center">
+        <Typography variant="h2" className="font-bold mb-4">Sign In</Typography>
+        <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your email and password to Sign In.</Typography>
+      </div>
         <form onSubmit={handleSubmit} className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
@@ -60,7 +61,11 @@ export function SignIn() {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              type="email" id="email" name="email" value={Email} onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              id="email"
+              name="email"
+              value={Email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Password
@@ -73,48 +78,29 @@ export function SignIn() {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              id="password" name="password" value={Password} onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              name="password"
+              value={Password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Checkbox
-            label={
-              <Typography
-                variant="small"
-                color="gray"
-                className="flex items-center justify-start font-medium"
-              >
-                I agree the&nbsp;
-                <a
-                  href="#"
-                  className="font-normal text-black transition-colors hover:text-gray-900 underline"
-                >
-                  Terms and Conditions
-                </a>
-              </Typography>
-            }
-            containerProps={{ className: "-ml-2.5" }}
-          />
-          <Button type="submit" className="mt-6" fullWidth>
-            Sign In
-          </Button>
+      
+         
+            <Button type="submit" className="mt-6" fullWidth>
+              Sign In
+            </Button>
+            <div className="flex items-center justify-between gap-2 mt-6"></div>
+            <div class=" text-red-800 ">
+               <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"><Message severity="error" text={errMsg} /></p>
+            </div>
 
+        
           <div className="flex items-center justify-between gap-2 mt-6">
-            <Checkbox
-              label={
-                <Typography
-                  variant="small"
-                  color="gray"
-                  className="flex items-center justify-start font-medium"
-                >
-                  Subscribe me to newsletter
-                </Typography>
-              }
-              containerProps={{ className: "-ml-2.5" }}
-            />
-            <Typography variant="small" className="font-medium text-gray-900">
-              <a href="#">
-                Forgot Password
-              </a>
+          
+            <Typography variant="small" color="blue-gray" className="flex items-center font-medium">
+              <Link to="#" className="transition-colors hover:text-gray-900 underline">
+                Forgot password
+              </Link>
             </Typography>
           </div>
           <div className="space-y-4 mt-8">
@@ -134,27 +120,15 @@ export function SignIn() {
               </svg>
               <span>Sign in With Google</span>
             </Button>
-            <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
-              <img src="/img/twitter-logo.svg" height={24} width={24} alt="" />
-              <span>Sign in With Twitter</span>
-            </Button>
           </div>
-          <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
-            Not registered?
-            <Link to="/auth/sign-up" className="text-gray-900 ml-1"> Create account</Link>
-          </Typography>
         </form>
-
-      </div>
+      </div> 
       <div className="w-2/5 h-full hidden lg:block">
         <img
           src="/img/pattern.png"
           className="h-full w-full object-cover rounded-3xl"
         />
       </div>
-
     </section>
   );
 }
-
-export default SignIn;
