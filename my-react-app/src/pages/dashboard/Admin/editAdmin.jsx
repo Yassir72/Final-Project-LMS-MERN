@@ -22,7 +22,7 @@ function EditAdmin({show,EditContent}){
    }
 
     return (
-                <div className="w-full h-full flex items-center justify-center fixed top-0 left-0 bg-gray-100 bg-opacity-70 inset-0 z-50 overflow-y-auto">
+<div className="w-full h-full flex items-center justify-center fixed top-0 left-0 bg-gray-100 bg-opacity-70 inset-0 z-50 overflow-y-auto">
 <div class="w-96">
    <div class="m-auto">
       <div>

@@ -23,9 +23,9 @@ export function SignIn() {
     try {
       const response = await axiosInstance.post("/admin/login", { Email,Password }, { withCredentials: true })
       const token = response.data.token
-    
       localStorage.setItem("token", token)
       navigate("/dashboard/home ")
+      
     } catch (err) {
       if (!err?.originalStatus) {
         setErrMsg('No Server Response !!!');
