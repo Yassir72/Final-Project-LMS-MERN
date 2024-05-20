@@ -1,5 +1,5 @@
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie'
+
 import {
   Navbar,
   Typography,
@@ -26,19 +26,22 @@ import {
   setOpenConfigurator,
   setOpenSidenav,
 } from "@/context";
-
+import { useSelector } from "react-redux";
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
 
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
-  const navigate = useNavigate();
+  
 
+  const navigate = useNavigate()
+ 
   const handleLogout = (e) => {
     e.preventDefault() 
-    removeCookie("token")
+    localStorage.removeItem('token')
+    navigate('/auth/sign-in')
+    
   };
 
   return (
@@ -97,7 +100,7 @@ export function DashboardNavbar() {
               className="hidden items-center gap-1 px-4 xl:flex normal-case"
               onClick={handleLogout} 
             >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+             <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
               Sign Out
             </Button>
             <IconButton
@@ -106,6 +109,7 @@ export function DashboardNavbar() {
               className="grid xl:hidden"
               onClick={handleLogout} 
             >
+              
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
             </IconButton>
           

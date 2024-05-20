@@ -2,7 +2,7 @@ const {register,login,logout,deleteStudent,updateStudent,getStudents,getStudentB
 const Router = require('express').Router();
 
 Router.post('/register',register);
-Router.post('/login',login);
+// Router.post('/login',login);
 Router.post('/logout',logout);
 Router.put('/updateStudent',updateStudent);
 Router.post('/deleteStudent',deleteStudent);
