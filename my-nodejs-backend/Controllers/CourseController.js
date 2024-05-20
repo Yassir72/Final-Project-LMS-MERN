@@ -50,14 +50,15 @@ const addCourse = async (req,res)=>{
 }
 
 const updateCourse = async (req,res)=>{
-    const id = req.params.id;
-    const { Title, Description, Price } = req.body
+    
+    const { Title, Description, Price, Image, id } = req.body
 
-    const course = await CourseModel.findOneAndUpdate({ id: id }, {
+    const course = await CourseModel.findOneAndUpdate({ _id: id }, {
         $set: {
             Title: Title,
             Description: Description,
             Price: Price,
+            Image: Image
         }
     },
         { new: true })

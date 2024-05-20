@@ -113,6 +113,9 @@ const adminSlice = createSlice({
                 state.error = null;
             })
             .addCase(editAdmin.fulfilled, (state, action) => {
+                state.admins=state.admins.map((admin)=>{ if(admin._id==action.payload._id) return action.payload ; 
+                    else return admin;
+})
                 state.isloading = false;
                 state.error = false;
             })

@@ -91,12 +91,15 @@ const instructorSlice = createSlice({
                 state.isloading = false;
                 state.error = action.error.message;
             })
-    //Add Instructor
+    //Edit Instructor
         .addCase(editInstructor.pending, (state) => {
             state.isloading = true;
             state.error = null;
         })
         .addCase(editInstructor.fulfilled, (state, action) => {
+            state.instructors=state.instructors.map((instructor)=>{ if(instructor._id==action.payload._id) return action.payload ; 
+                else return instructor;
+})
             state.isloading = false;
             state.error = false;
         })

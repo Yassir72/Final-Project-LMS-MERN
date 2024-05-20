@@ -20,6 +20,16 @@ export const addCourse = createAsyncThunk('course/addCourse', async({Title, Desc
     }
 })
 
+export const editCourse = createAsyncThunk('course/editCourse',async({ id, Title, Description, Price, Image })=>{
+    try{ console.log("AAAA");
+        const res = await axios.put('http://localhost:3000/course/updateCourse',{ id, Title, Description, Price, Image });
+        console.log(res.data);
+        return res.data;
+    } catch(error) {
+        console.log(error);
+    }
+})
+
 export const deleteCourse = createAsyncThunk('course/deleteCourse', async (id, { rejectWithValue }) => {
 
     return await axios.post('http://localhost:3000/course/deleteCourse', { id })
@@ -74,6 +84,22 @@ const courseSlice = createSlice({
             state.error = false;
         })
         .addCase(addCourse.rejected, (state, action) => {
+            state.isloading = false;
+            state.error = action.error.message;
+        })
+    //Edit Course
+        .addCase(editCourse.pending, (state,) => {
+            state.isloading = true;
+            state.error = null;
+        })
+        .addCase(editCourse.fulfilled, (state, action) => {
+            state.courses=state.courses.map((course)=>{ if(course._id==action.payload._id) return action.payload ; 
+                                                        else return course;
+             })
+            state.isloading = false;
+            state.error = false;
+        })
+        .addCase(editCourse.rejected, (state, action) => {
             state.isloading = false;
             state.error = action.error.message;
         })
