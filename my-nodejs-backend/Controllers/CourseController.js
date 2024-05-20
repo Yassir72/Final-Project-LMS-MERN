@@ -1,8 +1,4 @@
 const CourseModel = require ('../Models/CourseSchema');
-const multer = require('multer');
-
-const storage = multer.memoryStorage(); // Store files in memory as buffers
-const upload = multer({ storage: storage });
 
 const getCourses = async (req,res)=>{
     try{
@@ -32,28 +28,18 @@ const getCourseById = async (req,res)=>{
 
 const addCourse = async (req, res) => {
     try {
-        const { Title, Description, Price } = req.body;
-        const { title, description, contentType } = req.file; // Assuming file upload middleware is used
+        const { Title, Description, Price, Image } = req.body;
 
-        // Check if the course already exists
-        const existingCourse = await CourseModel.findOne({ Title: Title });
-        if (existingCourse) {
-            return res.status(401).send("Course already exists!");
-        }
+        console.log(req.body);
 
-        // Create a new course with video data
+        
+
+        // Create a new course with the uploaded image URL and video URLs from Cloudinary
         const newCourse = await CourseModel.create({
+            Image,
             Title,
             Description,
             Price,
-            Videos: [
-                {
-                    title,
-                    description,
-                    videoData: req.file.buffer, // Assuming the file upload middleware provides buffer data
-                    contentType
-                }
-            ]
         });
 
         return res.status(201).json(newCourse);
@@ -61,29 +47,19 @@ const addCourse = async (req, res) => {
         console.error(err);
         return res.status(500).send("Server Error");
     }
-}
-
+};
 
 const updateCourse = async (req, res) => {
     try {
         const id = req.params.id;
-        const { Title, Description, Price } = req.body;
-        const { title, description, contentType } = req.file; // Assuming file upload middleware is used
-
-        // Find the course by ID and update it
+        const { Title, Description, Price , Image} = req.body
         const updatedCourse = await CourseModel.findByIdAndUpdate(id, {
             $set: {
+                Image,
                 Title,
                 Description,
                 Price,
-                Videos: [
-                    {
-                        title,
-                        description,
-                        videoData: req.file.buffer, // Assuming the file upload middleware provides buffer data
-                        contentType
-                    }
-                ]
+              
             }
         }, { new: true });
 
@@ -91,14 +67,14 @@ const updateCourse = async (req, res) => {
         if (!updatedCourse) {
             return res.status(404).send("Course not found");
         }
-        
+
         // Send the updated course as response
         res.json(updatedCourse);
     } catch (err) {
         console.error(err);
         return res.status(500).send("Server Error");
     }
-}
+};
 
 const deleteCourse = async (req,res)=>{
     console.log(req.body.id);
@@ -108,4 +84,4 @@ const deleteCourse = async (req,res)=>{
         .catch((err) => res.send(err))
 }
 
-module.exports={getCourses , getCourseById , addCourse , updateCourse , deleteCourse , upload};
+module.exports={getCourses , getCourseById , addCourse , updateCourse , deleteCourse };

@@ -1,7 +1,5 @@
 import {
   PlusCircleIcon,
-  ShoppingCartIcon,
-  CreditCardIcon,
 } from "@heroicons/react/24/solid";
 import { React, useState, useEffect } from "react";
 import axios from 'axios';
@@ -26,25 +24,25 @@ export const ordersOverviewData = [
     description: "21 DEC 11 PM",
   },
   {
-    icon: ShoppingCartIcon,
+    icon: PlusCircleIcon,
     color: "text-blue-gray-300",
     title: "Server payments for April",
     description: "21 DEC 9:34 PM",
   },
   {
-    icon: CreditCardIcon,
+    icon: PlusCircleIcon,
     color: "text-blue-gray-300",
     title: "New card added for order #1234",
     description: "20 DEC 2:20 AM",
   },
   {
-    icon: ShoppingCartIcon,
+    icon: PlusCircleIcon,
     color: "text-blue-gray-300",
     title: "Unlock packages for development",
     description: "18 DEC 4:54 AM",
   },
   {
-    icon: CreditCardIcon,
+    icon: PlusCircleIcon,
     color: "text-blue-gray-300",
     title: "New order #123",
     description: "17 DEC",
@@ -65,7 +63,7 @@ const Orderstable = () => {
             return {
               ...order,
               title: fetchedOrder.orderReference +" "+ fetchedOrder.status ,
-              description: fetchedOrder.totalAmount+" "+fetchedOrder.createdAt,
+              description: "$"+fetchedOrder.totalAmount+" "+ new Date(fetchedOrder.createdAt).toDateString(),
             };
           } else {
             return order; // Keep the original order if fetchedOrder is undefined

@@ -9,10 +9,10 @@ const insRouter=require('./Routes/InstructorRoutes');
 const courseRouter=require('./Routes/CourseRoutes');
 const {logging} = require('./Routes/Api');
 
-
+const servers= ["http://localhost:5173","http://localhost:5174"]
 
 app.use(express.json())
-app.use(cors({origin:"http://localhost:5173",credentials:true}))
+app.use(cors({origin: servers ,credentials:true}))
 
 
 app.use(logging);

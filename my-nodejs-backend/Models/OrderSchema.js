@@ -16,16 +16,16 @@ const OrderModel = mongoose.model('Order', OrderSchema);
 // (async () => {
 //     try {
 //         // Find a specific student
-//         const student = await StudentModel.findOne({ _id: '660d658ed557780a3cc10631' });
+//         const student = await StudentModel.findOne({ _id: '663cd76849a0164861a963cd' });
 
 //         // Find courses
-//         const courses = await CourseModel.find({ Price: { $gte: '179' } });
+//         const courses = await CourseModel.find({ Price: { $gte: '200' } });
 //         // Create order
 //         const order = {
 //             client: student._id, // Assuming _id is the reference to the student
 //             course: courses.map(course => course._id),
-//             orderReference: 'ORD1234',
-//             status: 'Pending',
+//             orderReference: 'ORD1238',
+//             status: 'Completed',
 //             totalAmount: courses.reduce((total, course) => total + parseInt(course.Price), 0)
 //         };
 

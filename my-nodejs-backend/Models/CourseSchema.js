@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const url = require('url')
 require("../Config/Database")
 
 const CourseSchema = new mongoose.Schema({
@@ -10,15 +9,13 @@ const CourseSchema = new mongoose.Schema({
     Videos: [{
         title: { type: String, required: true },
         description: { type: String },
-        videoData: { type: Buffer, required: true },
-        contentType: { type: String, required: true }
+        videoUrl: { type: String, required: true }, 
     }]
 }, { timestamps: true });
 
+const CourseModel = mongoose.model('Course', CourseSchema);
 
-
-const CourseModel = new mongoose.model('Course', CourseSchema);
-module.exports= CourseModel;
+module.exports = CourseModel;
 
 // const courses = [
 //     {   
@@ -30,14 +27,12 @@ module.exports= CourseModel;
 //             {
 //                 title: "Introduction to HTML",
 //                 description: "Learn the basics of HTML",
-//                 videoData: Buffer.from('https://youtu.be/BAx2GaMW2qA'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/BAx2GaMW2qA'
 //             },
 //             {
 //                 title: "Introduction to CSS",
 //                 description: "Learn the basics of CSS",
-//                 videoData: Buffer.from('https://youtu.be/OEV8gMkCHXQ'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/OEV8gMkCHXQ'
 //             }
 //         ]
 //     },
@@ -50,14 +45,12 @@ module.exports= CourseModel;
 //             {
 //                 title: "Introduction to Data Science",
 //                 description: "An overview of data science",
-//                 videoData: Buffer.from('https://youtu.be/FsSrzmRawUg'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/FsSrzmRawUg'
 //             },
 //             {
 //                 title: "Machine Learning Basics",
 //                 description: "Introduction to machine learning concepts",
-//                 videoData: Buffer.from('https://youtu.be/ukzFI9rgwfU'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/ukzFI9rgwfU'
 //             }
 //         ]
 //     },
@@ -70,14 +63,12 @@ module.exports= CourseModel;
 //             {
 //                 title: "Getting Started with React Native",
 //                 description: "Set up your development environment and create your first React Native app",
-//                 videoData: Buffer.from('path/to/react_native_intro.mp4'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'path/to/react_native_intro.mp4'
 //             },
 //             {
 //                 title: "Navigation in React Native",
 //                 description: "Learn different navigation techniques in React Native",
-//                 videoData: Buffer.from('https://youtu.be/OmQCU-3KPms'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/OmQCU-3KPms'
 //             }
 //         ]
 //     },
@@ -90,14 +81,12 @@ module.exports= CourseModel;
 //             {
 //                 title: "Introduction to Graphic Design Principles",
 //                 description: "Learn about design elements and principles",
-//                 videoData: Buffer.from('https://youtu.be/UmHMVU6dceA'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/UmHMVU6dceA'
 //             },
 //             {
 //                 title: "Color Theory in Design",
 //                 description: "Understanding the psychology of colors in design",
-//                 videoData: Buffer.from('https://youtu.be/CSTZG-Dr9MY'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/CSTZG-Dr9MY'
 //             }
 //         ]
 //     },
@@ -110,19 +99,16 @@ module.exports= CourseModel;
 //             {
 //                 title: "Python Basics",
 //                 description: "Learn the fundamentals of Python",
-//                 videoData: Buffer.from('https://youtu.be/kqtD5dpn9C8'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/kqtD5dpn9C8'
 //             },
 //             {
 //                 title: "Working with Data in Python",
 //                 description: "Data manipulation and analysis with Python",
-//                 videoData: Buffer.from('https://youtu.be/2_6O39UdFi0?list=PLiC1doDIe9rCYWmH9wIEYEXXaJ4KAi3jc'),
-//                 contentType: 'video/mp4'
+//                 videoUrl: 'https://youtu.be/2_6O39UdFi0?list=PLiC1doDIe9rCYWmH9wIEYEXXaJ4KAi3jc'
 //             }
 //         ]
 //     },
 // ];
-
 
 // CourseModel.create(courses)
 //     .then((createdCourses) => {

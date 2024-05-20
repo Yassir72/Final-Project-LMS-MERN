@@ -1,4 +1,4 @@
-const{getCourses,getCourseById,addCourse,updateCourse,deleteCourse,upload}=require('../Controllers/CourseController')
+const{getCourses,getCourseById,addCourse,updateCourse,deleteCourse}=require('../Controllers/CourseController')
 const Router = require('express').Router()
 
 Router.post('/addCourse',addCourse)
