@@ -52,7 +52,7 @@ const bcrypt=require('bcrypt')
                 //     return res.status(404).json({ error: 'Email or password incorrect!' });
                 // }
         
-                const token = jwt.sign({ admin: admin.id }, process.env.SECRET_KEY, { expiresIn: '2h' });
+                const token = jwt.sign({ admin: admin.id, accountType: "admin" }, process.env.SECRET_KEY, { expiresIn: '2h' });
                 return res.json({ message: 'Admin logged in successfully!', token });
             } catch (error) {
                 console.error('Error during login:', error);
@@ -107,11 +107,15 @@ const addAdmin = async (req, res) => {
     
 const UpdateAdmin = async (req, res) => {
         
-        const { id, name, email } = req.body
+        const { id, name, email, phonenumber, location ,resumer,image} = req.body
         await AdminModel.findOneAndUpdate({ _id: id }, {
             $set: {
                 Name: name,
                 Email: email,
+                Phonenumber :phonenumber,
+                Location : location, 
+                Resumer : resumer,
+                Image : image,
             }
         },
             { new: true })
@@ -138,5 +142,17 @@ const getAllAdmins = async (req, res) => {
         }
     }
 
+const getAdminById =async (req, res) => {
+        const adminId = req.params.id;
+        const admin =await AdminModel.findById(adminId);
+    
+        if (!admin) {
+            res.status(404).json(error);
+            console.log('Student not found !');
+        }
+        res.json(admin)
+        console.log('Student fetched successfully !');
+    }    
 
-module.exports = {signIn,addAdmin,UpdateAdmin,deleteAdmin,getAllAdmins};
+
+module.exports = {signIn,addAdmin,UpdateAdmin,deleteAdmin,getAllAdmins,getAdminById};

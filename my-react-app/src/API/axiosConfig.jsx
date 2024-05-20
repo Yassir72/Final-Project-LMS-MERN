@@ -1,11 +1,11 @@
-import axios from 'axios';
-const createAxiosInstance = (jwtToken) => {
-  const headers = jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {};
-  const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000',
-    headers: headers,
-  });
-  return axiosInstance;
-};
+import axios from "axios"
 
-export default createAxiosInstance;
+const baseURL = "http://localhost:3000"
+
+const axiosInstance = axios.create({
+    baseURL
+})
+
+export default axiosInstance
+
+
