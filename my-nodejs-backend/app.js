@@ -7,6 +7,7 @@ const studentrouter=require('./Routes/StudentRoutes');
 const adminRouter=require('./Routes/AdminRoutes');
 const insRouter=require('./Routes/InstructorRoutes');
 const courseRouter=require('./Routes/CourseRoutes');
+const categoryRouter=require('./Routes/CategoryRoutes');
 const {logging} = require('./Routes/Api');
 
 
@@ -19,6 +20,7 @@ app.use('/student',studentrouter)
 app.use('/admin',adminRouter)
 app.use('/instructor',insRouter)
 app.use('/course',courseRouter)
+app.use('/category',categoryRouter)
 
 
 
