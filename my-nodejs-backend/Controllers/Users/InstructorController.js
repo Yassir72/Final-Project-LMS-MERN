@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const SignUp = async (req, res) => {
     try {
-        const { name, email, password, phonenumber, specialite, username } = req.body;
+        const { name, email, password, phonenumber, specialite, username, Image} = req.body;
 
         const existInstructor = await InstructorModel.findOne({ email: email });
         if (existInstructor) {
@@ -21,7 +21,8 @@ const SignUp = async (req, res) => {
             password : hashPassword ,
             phonenumber,
             specialite,
-            username
+            username,
+            Image
         });
 
         return res.status(201).json(newUser);
@@ -55,7 +56,7 @@ const SignIn = async (req, res) => {
 
 const addInstructor = async (req,res)=>{
     try { console.log(req.body);
-        const {name, password, email, phonenumber,specialite,username} = req.body;
+        const {name, password, email, phonenumber,specialite,username,Image} = req.body;
 
         const existingInstructor = await InstructorModel.findOne({ username: username });
         if (existingInstructor) {
@@ -63,7 +64,7 @@ const addInstructor = async (req,res)=>{
         }
 
         const newInstructor = await InstructorModel.create({
-            name, password, email, phonenumber,specialite,username
+            name, password, email, phonenumber,specialite,username,Image
         });
 
         return res.status(201).json(newInstructor);
@@ -77,7 +78,7 @@ const addInstructor = async (req,res)=>{
 
 const UpdateInstructor = async (req, res) => {
 
-    const { name, email, phonenumber, specialite, username, id } = req.body
+    const { name, email, phonenumber, specialite, username, id ,Image} = req.body
 
     await InstructorModel.findOneAndUpdate({ _id: id }, {
         $set: {
@@ -85,7 +86,8 @@ const UpdateInstructor = async (req, res) => {
             email: email,
             phonenumber: phonenumber,
             specialite: specialite,
-            username: username
+            username: username,
+            Image: Image
         }
     },
         { new: true })

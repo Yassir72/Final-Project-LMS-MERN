@@ -14,20 +14,20 @@ export const getinstructors = createAsyncThunk('instructor/getinstructors', asyn
 });
 
 export const addInstructor = createAsyncThunk('instructor/addInstructor', async(
-    {name, password, email, phonenumber,
+    {Image,name, password, email, phonenumber,
     specialite,username})=>{
     try { 
         const res = await axios.post('http://localhost:3000/instructor/addInstructor',
-        {name, password, email, phonenumber,specialite,username})
+        {name, password, email, phonenumber,specialite,username,Image})
         return res.data;
     } catch (error) {
         console.log(error);
     }
 })
 
-export const editInstructor = createAsyncThunk('instructor/editInstructor',async({id , email, name, phonenumber, specialite, username})=>{
+export const editInstructor = createAsyncThunk('instructor/editInstructor',async({id , email, name, phonenumber, specialite, username,Image})=>{
     try{
-        const res = await axios.put('http://localhost:3000/instructor/updateInstructor',{id , email, name, phonenumber, specialite, username});
+        const res = await axios.put('http://localhost:3000/instructor/updateInstructor',{id , email, name, phonenumber, specialite, username,Image});
         return res.data;
     } catch(error) {
         console.log(error);

@@ -102,7 +102,7 @@ export function Admins() {
               </tr>
             </thead>
             <tbody>
-              { currentAdmins.map(({ Name, Email, createdAt, _id }, key) => {
+              { currentAdmins.map(({Image, Name, Email, createdAt, _id }, key) => {
                 const className = `py-3 px-5 ${
                   key === currentAdmins.length - 1 ? "" : "border-b border-blue-gray-50"
                 }`;
@@ -111,7 +111,7 @@ export function Admins() {
                   <tr key={Name}>
                     <td className={className}>
                       <div className="flex items-center gap-4">
-                        <Avatar src='../../public/img/icons8-admin-52.png' alt={Name} size="sm" variant="rounded" />
+                        <Avatar src={Image} alt={Name} size="sm" variant="rounded" />
                         <div>
                           <Typography 
                             variant="small"

@@ -31,18 +31,18 @@ export const getadmins = createAsyncThunk('admin/getadmins', async () => {
     }
 });
 
-export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, Password})=>{
+export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, Password, Image})=>{
     try { 
-        const res = await axios.post('http://localhost:3000/admin/addAdmin', {Name ,Email , Password})
+        const res = await axios.post('http://localhost:3000/admin/addAdmin', {Name ,Email , Password, Image})
         return res.data;
     } catch (error) {
         console.log(error);
     }
 })
 
-export const editAdmin = createAsyncThunk('admin/editAdmin',async({ name, email, id })=>{
+export const editAdmin = createAsyncThunk('admin/editAdmin',async({ name, email, id ,Image})=>{
     try{ console.log("AAAA");
-        const res = await axios.put('http://localhost:3000/admin/updateAdmin',{ name, email,id });
+        const res = await axios.put('http://localhost:3000/admin/updateAdmin',{ name, email,id ,Image});
         console.log(res.data);
         return res.data;
     } catch(error) {
