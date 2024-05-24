@@ -14,11 +14,14 @@ const getOrders = async (req,res)=>{
 const getOrderById = async (req, res) => {
     try {
         const orderId = req.params.id;
-        const orders = await OrderModel.findById({ id: orderId });
-        if (!orders || orders.length === 0) {
+        const orders = await OrderModel.findById( orderId ).populate({
+            path: "course",
+            model: "Course",
+            select: "Image Title Price"
+        })
+        if (!orders) {
             return res.status(404).send("No orders found for the provided id");
         }
-        
         res.send(orders);
     } catch (err) {
         console.error(err);

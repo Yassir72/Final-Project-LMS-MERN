@@ -8,6 +8,7 @@ const InstructorSchema = new mongoose.Schema({
     phonenumber: { type: String, required: true },
     specialite: { type: String, required: true },
     username: { type: String, required: true },
+    Image:{ type:String}
 }, { timestamps: true })
 
 const InstructorModel = new mongoose.model('Instructor', InstructorSchema)

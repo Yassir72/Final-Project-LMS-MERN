@@ -62,9 +62,9 @@ const bcrypt=require('bcrypt')
         
 
 
-const addAdmin = async (req, res) => { 
+const addAdmin = async (req, res) => {  console.log(req.body);
         try { 
-            const { Name, Email, Password } = req.body;
+            const { Name, Email, Password ,Image} = req.body;
             const existAdmin = await AdminModel.findOne({ Email: Email });
     
             if (existAdmin) {
@@ -73,7 +73,8 @@ const addAdmin = async (req, res) => {
                 const newAdmin = await AdminModel.create({
                     Name,
                     Email,
-                    Password
+                    Password,
+                    Image
                 });
                 return res.status(201).json(newAdmin);
             }
@@ -105,9 +106,9 @@ const addAdmin = async (req, res) => {
     //     }
 
     
-const UpdateAdmin = async (req, res) => {
-        
-        const { id, name, email, phonenumber, location ,resumer,image} = req.body
+const UpdateAdmin = async (req, res) => { console.log("hhh");
+        console.log(req.body);
+        const { id, name, email, phonenumber, location ,resumer,Image} = req.body
         await AdminModel.findOneAndUpdate({ _id: id }, {
             $set: {
                 Name: name,
@@ -115,7 +116,7 @@ const UpdateAdmin = async (req, res) => {
                 Phonenumber :phonenumber,
                 Location : location, 
                 Resumer : resumer,
-                Image : image,
+                Image : Image,
             }
         },
             { new: true })

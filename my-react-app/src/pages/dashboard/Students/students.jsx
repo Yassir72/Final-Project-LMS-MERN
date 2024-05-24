@@ -87,7 +87,7 @@ export function Students() {
               </tr>
             </thead>
             <tbody>
-              {currentStudents.map(({ firstname, lastname, email, phoneNumber, _id, createdAt }, key) => {
+              {currentStudents.map(({ Image,firstname, lastname, email, phoneNumber, _id, createdAt }, key) => {
                 const className = `py-3 px-5 ${
                   key === currentStudents.length - 1 ? "" : "border-b border-blue-gray-50"
                 }`;
@@ -96,7 +96,7 @@ export function Students() {
                   <tr key={email}>
                     <td className={className}>
                       <div className="flex items-center gap-4">
-                        <Avatar src='../../public/img/icons8-student-52.png' alt={firstname + lastname} size="sm" variant="rounded" />
+                        <Avatar src={Image} alt={firstname + lastname} size="sm" variant="rounded" />
                         <div>
                           <Typography variant="small" color="blue-gray" className="font-semibold">
                             {firstname} {lastname}
