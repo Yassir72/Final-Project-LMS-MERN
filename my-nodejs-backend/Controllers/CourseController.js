@@ -49,6 +49,7 @@ const addCourse = async (req, res) => {
     }
 };
 
+
 const updateCourse = async (req,res)=>{
     console.log(req.body);
     const { Title, Description, Price, Image, id } = req.body

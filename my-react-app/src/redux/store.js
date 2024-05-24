@@ -13,6 +13,7 @@ import admins from './admin/slice'
 import students from './student/slice'
 import instructors from './instructor/slice'
 import courses from './course/slice'
+import categorys from './category/slice'
 
 export const store = configureStore({
     reducer : {
@@ -21,5 +22,6 @@ export const store = configureStore({
         students,
         instructors,
         courses,
+        categorys,
     }
 })
