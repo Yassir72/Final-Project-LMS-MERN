@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Subscribe = () => {
   return (
@@ -30,6 +29,7 @@ const Subscribe = () => {
           </g>
         </g>
       </svg>
+      <div class="bg-black">
       <section className="container mx-auto text-center py-6 mb-12 bg-black">
         <h2 className="w-full my-2 text-5xl font-bold leading-tight text-center text-white">
           Get Our Latest News
@@ -68,6 +68,7 @@ const Subscribe = () => {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 };

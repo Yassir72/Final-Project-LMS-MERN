@@ -6,8 +6,8 @@ const Hero = () => {
       <div>
         <section>
           <div className="pt-24">
-            <div className="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
-              <div className="flex flex-col p-10 md:w-2/5 justify-center items-start text-center">
+            <div className="container px-10 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+              <div className="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
                 <h1 className="my-4 text-4xl md:text-5xl font-bold leading-tight md:leading-none">
                   Welcome to KnowledgeBud!
                 </h1>
@@ -23,7 +23,7 @@ const Hero = () => {
                 </div>
               </div>
               <div className="md:w-3/5 py-6 text-center md:text-right">
-                <img className="w-full md:w-4/5 z-50 md:ml-auto" src="/hero.png" />
+                <img className="w-full md:w-4/5 z-50 md:ml-auto" src="../../../public/img/hero.png" />
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@ const Hero = () => {
           <div className="pt-24">
             <div className="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
               <div className="w-full md:w-3/5 py-6 text-center md:text-left">
-                <img className="w-full md:w-4/5 z-50 md:mr-auto" src="/elearning-website.jpg" />
+                <img className="w-full md:w-4/5 z-50 md:mr-auto" src="../../../public/img/elearning-website.jpg" />
               </div>
               <div className="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
                 <h2 className="my-4 text-4xl md:text-5xl font-bold leading-tight md:leading-none">
