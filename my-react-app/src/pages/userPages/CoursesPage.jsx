@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getcourses } from '@/redux/course/slice';
 import { getcategorys } from '@/redux/category/slice';
-import NavPage from "@/widgets/layout/navbarPages";
+import Header from "@/widgets/layout/header";
 import FooterPages from "@/widgets/layout/footerPages";
 import CourseCarde from "@/widgets/layout/courseCarde";
 import CardeCategory from "@/widgets/layout/cardeCategory";
@@ -51,9 +51,9 @@ export function CoursesPage() {
 
    return (
       <>
-         <NavPage />
+         <Header />
          <div className="pt-32 bg-white">
-            <h1 className="text-center text-3xl font-bold text-gray-800">All Courses</h1>
+            <h1 className="text-center text-3xl font-bold text-gray-900">All Courses</h1>
          </div>
          <div className=" relative flex flex-wrap items-center overflow-x-auto overflow-y-hidden py-10 justify-center bg-white text-gray-800 ">
             {filteredCategories.map(category => (

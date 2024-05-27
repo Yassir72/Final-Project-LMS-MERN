@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Pricing = () => {
   return (
@@ -28,9 +29,11 @@ const Pricing = () => {
                 <span className="text-base">/ per month</span>
               </div>
               <div className="flex items-center justify-center">
+                <Link to='/usersPg/signup'>
                 <button className="bg-black text-white font-bold rounded-full py-5 px-10 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                   Sign Up
                 </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -51,9 +54,11 @@ const Pricing = () => {
                 <span className="text-base">/ per month</span>
               </div>
               <div className="flex items-center justify-center">
+              <Link to='/usersPg/signup'>
                 <button className="bg-black text-white font-bold rounded-full py-5 px-10 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                   Sign Up
                 </button>
+              </Link>
               </div>
             </div>
           </div>
@@ -74,9 +79,11 @@ const Pricing = () => {
                 <span className="text-base">/ per month</span>
               </div>
               <div className="flex items-center justify-center">
+               <Link to='/usersPg/signup'>
                 <button className="bg-black text-white font-bold rounded-full py-5 px-10 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                   Sign Up
                 </button>
+               </Link>
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@ import { Admins } from "@/pages/dashboard/Admin/admins";
 import { Students } from "@/pages/dashboard/Students/students";
 import { Instructors } from "@/pages/dashboard/Instructors/instructors";
 import { Courses } from "@/pages/dashboard/Courses/courses";
-import { SignIn, SignUp } from "@/pages/auth";
+// import { SignIn, SignUp  } from "@/pages/auth";
 import Profile from "./pages/dashboard/profile";
 
 

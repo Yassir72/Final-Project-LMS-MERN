@@ -14,9 +14,11 @@ import students from './student/slice'
 import instructors from './instructor/slice'
 import courses from './course/slice'
 import categorys from './category/slice'
+import users from './authUser/slice'
 
 export const store = configureStore({
     reducer : {
+        users,
         user,
         admins,
         students,

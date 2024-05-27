@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -16,9 +17,12 @@ const Hero = () => {
                     At KnowledgeBud, we are passionate about fostering a community where learning never stops. Our mission is to provide a dynamic, engaging platform where knowledge blossoms and learners thrive. Whether you are looking to deepen your understanding of a specific subject, explore new areas of interest, or enhance your professional skills, KnowledgeBud is here to support your educational journey.
                   </p>
                   <div className="flex justify-center">
+                  <Link to ="/usersPg/CoursesPage">
                     <button className="bg-black text-white font-bold rounded-full py-5 px-10 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                       Get started
                     </button>
+                  </Link>  
+                    
                   </div>
                 </div>
               </div>
@@ -50,9 +54,11 @@ const Hero = () => {
                     <li className="leading-normal text-2xl mb-4">Supportive Community</li>
                   </ul>
                   <div className="flex justify-center">
+                  <Link to ="/usersPg/CoursesPage">
                     <button className="bg-black text-white font-bold rounded-full py-5 px-10 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                       Learn More
                     </button>
+                  </Link>  
                   </div>
                 </div>
               </div>

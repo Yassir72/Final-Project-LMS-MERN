@@ -8,6 +8,7 @@ const adminRouter=require('./Routes/AdminRoutes');
 const insRouter=require('./Routes/InstructorRoutes');
 const courseRouter=require('./Routes/CourseRoutes');
 const categoryRouter=require('./Routes/CategoryRoutes');
+const usersRouter=require('./Routes/UsersRoutes');
 const {logging} = require('./Routes/Api');
 
 const servers= ["http://localhost:5173","http://localhost:5174"]
@@ -25,6 +26,7 @@ app.use('/course',courseRouter)
 app.use('/order',orderRouter)
 
 app.use('/category',categoryRouter)
+app.use('/user',usersRouter)
 
 
 
