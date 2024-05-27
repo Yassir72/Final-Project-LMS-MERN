@@ -39,11 +39,10 @@ const bcrypt=require('bcrypt')
 //     };   
     const signIn = async (req, res) => { 
             const { Email, Password } = req.body;
-            console.log(Email);
             
             try {
                 const admin = await AdminModel.findOne({ Email : Email , Password : Password })
-                if (!admin) { console.log("hh");
+                if (!admin) { 
                     return res.status(404).json({ error: 'Email or password incorrect!' });
                 }
         
@@ -53,7 +52,7 @@ const bcrypt=require('bcrypt')
                 // }
         
                 const token = jwt.sign({ admin: admin.id, accountType: "admin" }, process.env.SECRET_KEY, { expiresIn: '2h' });
-                return res.json({ message: 'Admin logged in successfully!', token });
+                return res.json({ role: admin.Role ,message: 'Admin logged in successfully!', token });
             } catch (error) {
                 console.error('Error during login:', error);
                 return res.status(500).json({ error: 'Internal Server Error' });
@@ -64,7 +63,7 @@ const bcrypt=require('bcrypt')
 
 const addAdmin = async (req, res) => { 
         try { 
-            const { Name, Email, Password } = req.body;
+            const { Name, Email, Password, Role } = req.body;
             const existAdmin = await AdminModel.findOne({ Email: Email });
     
             if (existAdmin) {
@@ -73,7 +72,8 @@ const addAdmin = async (req, res) => {
                 const newAdmin = await AdminModel.create({
                     Name,
                     Email,
-                    Password
+                    Password,
+                    Role
                 });
                 return res.status(201).json(newAdmin);
             }
@@ -105,7 +105,7 @@ const addAdmin = async (req, res) => {
     //     }
 
     
-const UpdateAdmin = async (req, res) => {
+const UpdateAdmin = async (req, res) => { console.log("AA");
         
         const { id, name, email, phonenumber, location ,resumer,image} = req.body
         await AdminModel.findOneAndUpdate({ _id: id }, {

@@ -21,6 +21,10 @@ import EditAdmin from "./editAdmin";
 export function Admins() {
   const dispatch = useDispatch();
   const { admins, isLoading } = useSelector((state) => state.admins);
+  const { user } = useSelector((state) => state.user);
+
+
+
 
   const [addCard, setAddCard] = useState(false);
   const [editCard, setEditCard] = useState(false);
@@ -80,7 +84,8 @@ export function Admins() {
           <Typography variant="h6" color="white">
             Admins Table
           </Typography>
-          <button type="button" onClick={() => setAddCard(true)} className="px-2 py-1 font-semibold border rounded border-white-800 text-white-800">Add</button>
+          { user.Role=="Super Admin" && <button type="button" onClick={() => setAddCard(true)} className="px-2 py-1 font-semibold border rounded border-white-800 text-white-800">Add</button>
+        }
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
@@ -102,7 +107,7 @@ export function Admins() {
               </tr>
             </thead>
             <tbody>
-              { currentAdmins.map(({ Name, Email, createdAt, _id }, key) => {
+              { currentAdmins.map(({ Name, Email, createdAt, _id, Role }, key) => {
                 const className = `py-3 px-5 ${
                   key === currentAdmins.length - 1 ? "" : "border-b border-blue-gray-50"
                 }`;
@@ -119,6 +124,13 @@ export function Admins() {
                             className="font-semibold"
                           >
                             {Name}
+                          </Typography>
+                          <Typography 
+                            variant="small"
+                            color="gray"
+                            className="font-semibold"
+                          >
+                            {Role}
                           </Typography>
                         </div>
                       </div>
@@ -142,6 +154,7 @@ export function Admins() {
                       </Typography>
                     </td>
                     <td className={className}>
+                    { user.Role=="Super Admin" &&
                       <Typography
                         as="button"
                         className="text-xs font-semibold text-green-500"
@@ -149,8 +162,10 @@ export function Admins() {
                       >
                         Edit
                       </Typography>
+                    }
                     </td>
                     <td className={className}>
+                    { user.Role=="Super Admin" &&
                       <Typography
                         as="button"
                         className="text-xs font-semibold text-red-500"
@@ -158,6 +173,7 @@ export function Admins() {
                       >
                         Delete
                       </Typography>
+                    }
                     </td>
                   </tr>
                 );

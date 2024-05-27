@@ -31,9 +31,9 @@ export const getadmins = createAsyncThunk('admin/getadmins', async () => {
     }
 });
 
-export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, Password})=>{
+export const addAdmin = createAsyncThunk('admin/addAdmin', async({Name, Email, Password,Role})=>{
     try { 
-        const res = await axios.post('http://localhost:3000/admin/addAdmin', {Name ,Email , Password})
+        const res = await axios.post('http://localhost:3000/admin/addAdmin', {Name ,Email , Password,Role})
         return res.data;
     } catch (error) {
         console.log(error);

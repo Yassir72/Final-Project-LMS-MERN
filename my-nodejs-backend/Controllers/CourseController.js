@@ -28,7 +28,7 @@ const getCourseById = async (req,res)=>{
 
 const addCourse = async (req, res) => {
     try {
-        const { Title, Description, Price, Image } = req.body;
+        const { Title, Description, Price, Image, Videos } = req.body;
 
         console.log(req.body);
 
@@ -40,6 +40,7 @@ const addCourse = async (req, res) => {
             Title,
             Description,
             Price,
+            Videos
         });
 
         return res.status(201).json(newCourse);

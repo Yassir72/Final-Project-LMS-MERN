@@ -10,7 +10,7 @@ const AdminSchema = new mongoose.Schema({
     Location : { type: String},
     Resumer : { type: String},
     Image : { type: String},
-    role : { type: String, enum: ['Super Admin','Admin'] },
+    Role : { type: String, enum: ['Super Admin','Admin'] },
 }, { timestamps : true })
 
 const AdminModel = new mongoose.model('Admin',AdminSchema);

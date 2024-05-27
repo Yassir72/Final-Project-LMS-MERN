@@ -138,7 +138,7 @@ export function LandinPage() {
         </div>
       </div>
 
-      <div className="heading_section bg-red-600 text-gray-300">
+      <div className="heading_section bg-black text-gray-300">
         <div className="footer w-5/6 mx-auto text-center">
           <div className="sub flex-1 p-8">
             <div className="text-3xl mb-3 uppercase">Contact Us</div>

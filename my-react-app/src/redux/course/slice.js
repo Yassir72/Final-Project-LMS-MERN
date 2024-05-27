@@ -11,9 +11,19 @@ export const getcourses = createAsyncThunk('course/getcourses', async ()=>{
     }
 });
 
-export const addCourse = createAsyncThunk('course/addCourse', async({Title, Description, Price, Image})=>{
+export const getcoursebyID = createAsyncThunk('course/getcoursebyid', async ()=>{
+    try{ 
+        const res = await axios.get('http://localhost:3000/course/getCourse/66545f942f2c1dc75c58a4f0');
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+export const addCourse = createAsyncThunk('course/addCourse', async({Title, Description, Price, Image, Videos})=>{
     try { 
-        const res = await axios.post('http://localhost:3000/course/addCourse', {Title, Description, Price, Image})
+        const res = await axios.post('http://localhost:3000/course/addCourse', {Title, Description, Price, Image, Videos})
         return res.data;
     } catch (error) {
         console.log(error);
@@ -21,9 +31,9 @@ export const addCourse = createAsyncThunk('course/addCourse', async({Title, Desc
 })
 
 export const editCourse = createAsyncThunk('course/editCourse',async({ id, Title, Description, Price, Image })=>{
-    try{ console.log("AAAA");
+    try{ 
         const res = await axios.put('http://localhost:3000/course/updateCourse',{ id, Title, Description, Price, Image });
-        console.log(res.data);
+        
         return res.data;
     } catch(error) {
         console.log(error);
@@ -42,7 +52,7 @@ export const deleteCourse = createAsyncThunk('course/deleteCourse', async (id, {
 
 const courseSlice = createSlice({
     name : 'course',
-    initialState : { courses : [] , isloading : false, error : null },
+    initialState : { courseOne: {} , courses : [] , isloading : false, error : null },
     reducers : {},
     extraReducers : (builder)=>{
     //getcourses
@@ -56,6 +66,20 @@ const courseSlice = createSlice({
             state.error = false;
         })
         .addCase(getcourses.rejected , (state,action)=>{
+            state.isloading = false;
+            state.error = action.error.message;
+        })
+    //getcourse by ID
+        builder.addCase(getcoursebyID.pending , (state,action)=>{
+            state.isloading = true;
+            state.error = null;
+        })
+        .addCase(getcoursebyID.fulfilled , (state , action)=>{
+            state.courseOne = action.payload;
+            state.isloading = false;
+            state.error = false;
+        })
+        .addCase(getcoursebyID.rejected , (state,action)=>{
             state.isloading = false;
             state.error = action.error.message;
         })

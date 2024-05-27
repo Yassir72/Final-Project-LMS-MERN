@@ -4,9 +4,10 @@ require("../Config/Database")
 const CourseSchema = new mongoose.Schema({
     Image: { type: String, required: true },
     Title: { type: String, required: true },
-    Description: { type: String, required: true },
+    Description: { type: String },
     Price: { type: Number, required: true },
     Videos: [{
+        image: { type: String, required: true },
         title: { type: String, required: true },
         description: { type: String },
         videoUrl: { type: String, required: true }, 

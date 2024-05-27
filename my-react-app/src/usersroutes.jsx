@@ -1,4 +1,5 @@
 import { LandinPage ,CoursesPage } from "@/pages/userPages";
+import CourseDetail from "./pages/userPages/CourseDetail";
 
 export const usersroutes = [
   {
@@ -11,6 +12,10 @@ export const usersroutes = [
       {
         path: "/CoursesPage",
         element: <CoursesPage/>,
+      },
+      {
+        path: "/CourseDetail",
+        element: <CourseDetail/>,
       },
       
     ],

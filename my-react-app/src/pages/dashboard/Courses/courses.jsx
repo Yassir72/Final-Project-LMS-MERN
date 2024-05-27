@@ -22,7 +22,6 @@ import EditCourse from "./editCourse";
 export function Courses() {
   const dispatch = useDispatch();
   const { courses, isLoading } = useSelector((state) => state.courses);
-  console.log(courses);
   const [addCard, setAddCard] = useState(false);
   const [editCard, setEditCard] = useState(false);
   const [edited, setEdited] = useState(null);

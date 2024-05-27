@@ -7,7 +7,7 @@ export const getUser = createAsyncThunk(
     async ({ accountType, admin }, { rejectWithValue }) => {
       return axiosInstance
         .get(`/${accountType}/get${accountType.charAt(0).toUpperCase()}${accountType.slice(1)}ById/${admin}`)
-        .then((res) => {
+        .then((res) => { 
           return res.data;
         })
         .catch((err) => rejectWithValue(err.response.data.message));

@@ -16,9 +16,10 @@ function AddAdmin({show}){
    const [email,setEmail] = useState();
    const [name,setName] = useState();
    const [password,setPassword] = useState();
+   const [role,setRole] = useState();
 
-   function addButton(){
-      dispatch(addAdmin({Name : name, Email: email, Password : password}))
+   function addButton(){ console.log(role);
+      dispatch(addAdmin({Name : name, Email: email, Password : password, Role : role}))
    }
 
     return (
@@ -45,7 +46,11 @@ function AddAdmin({show}){
                <input placeholder="Password" 
                value={password} onChange={(e)=>{setPassword(e.target.value)}}
                class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"/> 
-
+               <select name="cars" class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400" 
+               onChange={(e)=>{setRole(e.target.value)}}>
+                  <option value="Admin">Admin</option>
+                  <option value="Super Admin">Super Admin</option>
+               </select>
             </div>
             
             <div class="px-5 ">  
