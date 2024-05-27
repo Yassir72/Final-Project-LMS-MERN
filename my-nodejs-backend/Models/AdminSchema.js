@@ -15,7 +15,7 @@ const AdminSchema = new mongoose.Schema({
 
 const AdminModel = new mongoose.model('Admin',AdminSchema);
 
-// AdminModel.create({Name : "aa", Password : "1234", Email : "yassir@arkx.com"})
+// AdminModel.create({Name : "john doe", Password : "1234", Email : "John@arkx.com" ,Phonenumber:"0642897149",Location:"Casa",Resumer:"Hi ! i'm John Doe ,happily married and got four kids", Image:"https://cdn-icons-png.flaticon.com/512/3135/3135715.png",role:"Super Admin"})
 //   .then((newAdmin)=>console.log('Admin added Successfully : ',newAdmin))
 //   .catch((error)=>console.log('Error creating admin : ',error))
 

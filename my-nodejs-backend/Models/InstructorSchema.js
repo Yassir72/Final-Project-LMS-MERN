@@ -2,12 +2,14 @@ const mongoose = require('mongoose');
 require("../Config/Database")
 
 const InstructorSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    name: { type: String,  },
     password: { type: String, required: true },
     email: { type: String, required: true },
-    phonenumber: { type: String, required: true },
-    specialite: { type: String, required: true },
+    phonenumber: { type: String,  },
+    specialite: { type: String },
     username: { type: String, required: true },
+    Image:{ type:String},
+    role : { type: String, enum: ['Instructor'],required: true },
 }, { timestamps: true })
 
 const InstructorModel = new mongoose.model('Instructor', InstructorSchema)

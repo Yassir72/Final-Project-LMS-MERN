@@ -12,10 +12,10 @@ export const getStudents = createAsyncThunk('student/getStudents', async ()=>{
 });
 
 export const addStudent = createAsyncThunk('student/addStudent', async(
-    {firstname, lastname, email,username,password,phoneNumber})=>{
+    {firstname, lastname, email,username,password,phoneNumber,Image})=>{
     try { 
         const res = await axios.post('http://localhost:3000/student/register', 
-        {firstname, lastname, email,username,password,phoneNumber})
+        {firstname, lastname, email,username,password,phoneNumber,Image})
         return res.data;
     } catch (error) {
         console.log(error);

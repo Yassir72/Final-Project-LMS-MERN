@@ -1,5 +1,6 @@
 import { LandinPage ,CoursesPage } from "@/pages/userPages";
 import CourseDetail from "./pages/userPages/CourseDetail";
+import {SignUpUser , SignInUser } from "@/pages/auth"
 
 export const usersroutes = [
   {
@@ -14,9 +15,18 @@ export const usersroutes = [
         element: <CoursesPage/>,
       },
       {
+        path: "/signup",
+        element: <SignUpUser/>,
+      },
+      {
+        path: "/signin",
+        element: <SignInUser/>,
+      },
+      {
         path: "/CourseDetail",
         element: <CourseDetail/>,
       },
+
       
     ],
     

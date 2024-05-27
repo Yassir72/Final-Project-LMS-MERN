@@ -8,7 +8,6 @@ import Protected from "./Protected";
 
 function App() {
   return (
-  // <AuthProvider>
     <Routes>
       <Route path="/usersPg/*" element={<UsersPg />} />
       <Route path="*" element={<Navigate to="/usersPg/LandingPage/" replace />} />
@@ -19,7 +18,6 @@ function App() {
          <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
       </Route>  
   </Routes> 
-  // </AuthProvider>
   );
 }
 

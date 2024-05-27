@@ -4,7 +4,7 @@ const StudentModel = require("../../Models/StudentSchema")
 const jwt=require('jsonwebtoken');
 
 const register = async (req, res) => {
-    const { firstname, lastname, email, password, username, phoneNumber } = req.body;
+    const { firstname, lastname, email, password, username, phoneNumber,Image } = req.body;
     const existingUser = await StudentModel.findOne({ email: email })
     console.log(existingUser);
     // const hashedpassword=hash.bcrypt(password,10);
@@ -15,7 +15,8 @@ const register = async (req, res) => {
             email: email,
             password: password,
             username: username,
-            phoneNumber: phoneNumber
+            phoneNumber: phoneNumber,
+            Image: Image
         })
         res.json(newStudent);
         console.log('Student created successfully !');
@@ -53,7 +54,7 @@ const logout = (req, res) => {
 
 const updateStudent = async (req, res) => {
     const { id } = req.params;
-    const { firstname, lastname, email, password, username, phoneNumber } = req.body;
+    const { firstname, lastname, email, password, username, phoneNumber,Image } = req.body;
     
     // Build the update object
     const updateObj = {};
@@ -63,6 +64,7 @@ const updateStudent = async (req, res) => {
     if (password) updateObj.password = password;
     if (username) updateObj.username = username;
     if (phoneNumber) updateObj.phoneNumber = phoneNumber;
+    if(Image) updateObj.Image=Image;
 
     try {
         // Find the student by id and update with the update object

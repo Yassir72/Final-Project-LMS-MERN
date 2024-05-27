@@ -1,4 +1,4 @@
-import { SignIn, SignUp } from "@/pages/auth";
+import { SignIn} from "@/pages/auth";
 
 export const authroutes = [
   {
@@ -8,10 +8,10 @@ export const authroutes = [
         path: "/sign-in",
         element: <SignIn />,
       },
-      {
-        path: "/sign-up",
-        element: <SignUp />,
-      },
+      // {
+      //   path: "/sign-up",
+      //   element: <SignUp />,
+      // },
     ],
     
   }

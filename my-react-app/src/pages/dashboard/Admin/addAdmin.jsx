@@ -13,14 +13,53 @@ import {
 
 function AddAdmin({show}){
    const dispatch = useDispatch();
+   const [image,setImage] = useState();
    const [email,setEmail] = useState();
    const [name,setName] = useState();
    const [password,setPassword] = useState();
    const [role,setRole] = useState();
 
-   function addButton(){ console.log(role);
-      dispatch(addAdmin({Name : name, Email: email, Password : password, Role : role}))
-   }
+   const uploadImage = async () => {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "ciof6yzr");
+      data.append("cloud_name", "dxm05ueme");
+      data.append("folder", "Cloudinary-React");
+  
+      try {
+        const response = await fetch( 
+          "https://api.cloudinary.com/v1_1/dxm05ueme/image/upload",
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+        const responseData = await response.json(); // Parse response JSON
+        console.log("Cloudinary API Response:", responseData); // Log entire response
+        if (responseData && responseData.secure_url) {
+          // Check if secure_url is available in the response
+          return responseData.secure_url 
+          
+        }else {
+          console.error("Image upload failed: Secure URL not found in response");
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+    ;
+    const Handlerphoto = (event) => {
+      const file = event.target.files[0];
+      console.log(file)
+      setImage(file);
+    }
+     
+   async function addButton() {
+      const secureUrl = await uploadImage(); // Call uploadImage function
+      if (secureUrl) {
+          dispatch(addAdmin({Name : name, Email: email, Password : password, Image : secureUrl, Role : role}))
+       }
+       }
 
     return (
                 <div className="w-full h-full flex items-center justify-center fixed top-0 left-0 bg-gray-100 bg-opacity-70 inset-0 z-50 overflow-y-auto">
@@ -51,6 +90,8 @@ function AddAdmin({show}){
                   <option value="Admin">Admin</option>
                   <option value="Super Admin">Super Admin</option>
                </select>
+               <input name="Image" type="file" 
+                onChange={(e)=>{Handlerphoto(e)}}/>
             </div>
             
             <div class="px-5 ">  
@@ -76,7 +117,10 @@ function AddAdmin({show}){
 </div>
 </div>
 
-      );
-}
+    );
+   }
+
+
+
 
 export default AddAdmin;
