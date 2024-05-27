@@ -5,6 +5,25 @@ const initialState = {
   totalAmount: 0,
 };
 
+// export const addToCart = createAsyncThunk(
+//   "cart/addToCart",
+//   async ({ Title, , quantity, rentalDays }, { rejectWithValue }) => {
+//     try {
+//       // console.log({ userId, productId, quantity, rentalDays });
+//       const response = await axios.post("http://localhost:5000/v1/cart/add", {
+//         userId,
+//         productId,
+//         quantity,
+//         rentalDays
+//       });
+//       // console.log(response);
+//       return response.data;
+//     } catch (error) {
+//       console.error('Error in addToCart:', error.response || error.message);
+//       return rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
