@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrder, removeCourse } from '../redux/cartSlice.js';
+import { setOrder, removeCourse } from '@/redux/cartSlice';
 import {loadStripe} from '@stripe/stripe-js'
+import Navbar from '@/nav';
+import Footer from '@/footer';
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
@@ -83,6 +85,9 @@ const ShoppingCart = () => {
   if (!course) return <p>Loading...</p>;
 
   return (
+    <>
+      <Navbar/>
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
     <section className={`bg-white py-8 w-full px-10 antialiased dark:bg-gray-900 md:py-16`}>
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <div className='flex md:gap-6'>
@@ -255,6 +260,9 @@ const ShoppingCart = () => {
         </div>
       )}
     </section>
+    </div>
+    <Footer/>
+    </>
   );
 };
 

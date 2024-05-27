@@ -5,11 +5,14 @@ import Contact from "../contact/contactForm";
 import Subscribe from "../subscribe/subscribe";
 import Feedback from "../reviews/feedback";
 import React from "react";
+import Navbar from "@/nav";
+import Footer from "@/footer";
 
 const Landing = ()=>{
     return(
-        <div>
-            <section id="hero">
+        <div >
+            <Navbar/>
+            <section className="min-h-screen bg-gray-100 flex items-center justify-center" id="hero">
                 <Hero/>
             </section>
             <section className="bg-white border py-20 w-full h-full overflow-x-hidden" id="courses">
@@ -32,6 +35,7 @@ const Landing = ()=>{
             <section id="sub">
                 <Subscribe/>
             </section>
+            <Footer/>
 
         </div>
     )
