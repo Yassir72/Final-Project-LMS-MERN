@@ -1,6 +1,7 @@
 import { LandinPage ,CoursesPage } from "@/pages/userPages";
 import CourseDetail from "./pages/userPages/CourseDetail";
 import {SignUpUser , SignInUser } from "@/pages/auth"
+import ShoppingCart from "./widgets/shopping/shoppingCart";
 
 export const usersroutes = [
   {
@@ -9,6 +10,10 @@ export const usersroutes = [
       {
         path: "/LandingPage",
         element: <LandinPage/>,
+      },
+      {
+        path: "/Shop",
+        element: <ShoppingCart/>,
       },
       {
         path: "/CoursesPage",
