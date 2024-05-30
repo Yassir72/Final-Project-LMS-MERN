@@ -15,6 +15,7 @@ import instructors from './instructor/slice'
 import courses from './course/slice'
 import categorys from './category/slice'
 import users from './authUser/slice'
+import cartReducer from './cartSlice';
 
 export const store = configureStore({
     reducer : {
@@ -25,5 +26,6 @@ export const store = configureStore({
         instructors,
         courses,
         categorys,
+        cart: cartReducer,
     }
 })

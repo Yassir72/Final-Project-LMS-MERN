@@ -234,13 +234,13 @@ function AddCourse({ show }) {
   async function handleVideos(index, field, value) {
     const updatedVideos = [...videos];
     if (field === "videoUrl") {
-      const file = value.files[0]; console.log(`${title}\/${updatedVideos[index]["title"]}`);
-      const videoURL = await uploadVideo(file,`${title}\/${updatedVideos[index]["title"]}`);
+      const file = value.files[0]; 
+      const videoURL = await uploadVideo(file,`${title}_videos\/${updatedVideos[index]["title"]}`);
       value = videoURL;
     }
     if (field === "v_image") {
-      const file = value.files[0]; console.log(`${title}\/${updatedVideos[index]["title"]}`);
-      const v_image = await uploadv_Image(file,`${title}\/${updatedVideos[index]["title"]}`);
+      const file = value.files[0]; 
+      const v_image = await uploadv_Image(file,`${title}_images\/${updatedVideos[index]["title"]}`);
       value = v_image;
     }
     
@@ -264,10 +264,10 @@ function AddCourse({ show }) {
           className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
         />
         <input
-                  name="Image"
-                  type="file"
-                  onChange={(e) => handleVideos(index, "v_image", e.target)}
-                  className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
+          name="Image"
+          type="file"
+          onChange={(e) => handleVideos(index, "v_image", e.target)}
+          className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                 />
         <input
           name="Video"
@@ -285,7 +285,7 @@ function AddCourse({ show }) {
     data.append("upload_preset", "ciof6yzr");
     data.append("public_id", name);
     data.append("cloud_name", "dxm05ueme");
-    data.append("folder", "Cloudinary-React");
+    data.append("folder", title);
 
     try {
       const response = await fetch(
@@ -310,8 +310,9 @@ function AddCourse({ show }) {
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "ciof6yzr");
+    data.append("public_id", title);
     data.append("cloud_name", "dxm05ueme");
-    data.append("folder", "Cloudinary-React");
+    data.append("folder", title);
 
     try {
       const response = await fetch(
@@ -339,7 +340,7 @@ function AddCourse({ show }) {
     data.append("upload_preset", "ciof6yzr");
     data.append("public_id", name);
     data.append("cloud_name", "dxm05ueme");
-    data.append("folder", "Courses-videos");
+    data.append("folder", title);
 
     try {
       const response = await fetch(
@@ -367,7 +368,7 @@ function AddCourse({ show }) {
 
   async function addButton() {
     const secureUrl = await uploadImage();
-    if (secureUrl) {
+    if (secureUrl) { 
       dispatch(
         addCourse({ Title: title, Description: description, Price: price, Image: secureUrl, Videos : videos })
       );

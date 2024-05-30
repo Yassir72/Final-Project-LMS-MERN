@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrder, removeCourse } from '../redux/cartSlice.js';
+import { setOrder, removeCourse } from '../../redux/cartSlice';
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
