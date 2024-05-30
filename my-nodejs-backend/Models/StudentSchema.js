@@ -8,7 +8,12 @@ const StudentSchema=new mongoose.Schema({
     password: {type:String, required:true},
     Image: {type:String},
     phoneNumber: {type:String,}, 
-    role : { type: String, enum: ['Student'],required: true },
+    location: {type:String},
+    birthday: {type:String,},
+    linkedIn: {type:String},
+    github : {type:String},
+    role : { type: String, enum: ['Student'],default: 'Student'},
+
 },
     { timestamps : true })
 

@@ -67,8 +67,9 @@ const login = async (req, res) => {
             return res.status(404).json({ error: 'Email or password incorrect!' });
         }
 
-        const token = jwt.sign({ userId: user._id, role }, process.env.SECRET_KEY, { expiresIn: '2h' });
-        return res.json({ message: 'Logged in successfully!', token });
+        const token = jwt.sign({ userId: user._id, accountType: role }, process.env.SECRET_KEY, { expiresIn: '2h' });
+        return res.json({ role: user.role , message: 'Logged in successfully!', token });
+                
     } catch (error) {
         console.error('Error during login:', error);
         return res.status(500).json({ error: 'Internal Server Error' });

@@ -56,6 +56,18 @@ export function UsersPg() {
         path: "/usersPg/signup",
         icon: UserPlusIcon,
       },
+      {
+        name: "cousesPage",
+        path: "/usersPg/CoursesPage",
+        icon: UserPlusIcon,
+      },
+      // {
+      //   name: "Student Profile",
+      //   path: "/usersPg/StudentProfile",
+      //   icon: UserPlusIcon,
+      // },
+    
+      
     ];
   
     return (
