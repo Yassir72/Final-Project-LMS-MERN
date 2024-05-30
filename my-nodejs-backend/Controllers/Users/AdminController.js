@@ -149,10 +149,10 @@ const getAdminById =async (req, res) => {
     
         if (!admin) {
             res.status(404).json(error);
-            console.log('Student not found !');
+            console.log('Admin not found !');
         }
         res.json(admin)
-        console.log('Student fetched successfully !');
+        console.log('Admin fetched successfully !');
     }    
 
 

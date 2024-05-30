@@ -110,13 +110,13 @@ const getStudents = async (req, res) => {
 
 const getStudentById =async (req, res) => {
     const studentId = req.params.id;
-    const student =await StudentModel.findOne(studentId);
+    const student =await StudentModel.findById(studentId);
 
     if (!student) {
         res.status(404).json(error);
         console.log('Student not found !');
     }
-    res.json(   student)
+    res.json(student)
     console.log('Student fetched successfully !');
 }
 

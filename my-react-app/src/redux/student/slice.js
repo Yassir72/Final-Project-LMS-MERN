@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
+import axiosInstance from '@/API/axiosConfig';
 
 export const getStudents = createAsyncThunk('student/getStudents', async ()=>{
     try{
@@ -30,11 +31,26 @@ export const deleteStudent = createAsyncThunk('student/deleteStudent', async (id
         })
         .catch((error) => rejectWithValue(error))
 })
+export const getStudent = createAsyncThunk(
+    "student/getStudent",
+    async ({ accountType, userId }, { rejectWithValue }) => {
+      return axiosInstance
+        .get(`/${accountType}/get${accountType.charAt(0).toUpperCase()}${accountType.slice(1)}ById/${userId}`)
+        .then((res) => { 
+          return res.data;
+        })
+        .catch((err) => rejectWithValue(err.response.data.message));
+    }
+  );
 
 
 const studentSlice = createSlice({
     name : 'student',
-    initialState : { students : [] , isloading : false, error : null },
+    initialState : { students : [] , isloading : false, error : null,
+    // studentInformation: null,
+    loggedIn: false,
+    isLoading: true,
+    },
     reducers : {},
     extraReducers : (builder)=>{
     //getStudents
@@ -51,6 +67,16 @@ const studentSlice = createSlice({
             state.isloading = false;
             state.error = action.error.message;
         })
+    //get student by Id 
+    .addCase(getStudent.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.loggedIn = true
+        state.students = action.payload
+    })
+    .addCase(getStudent.rejected, (state) => {
+        state.isLoading = false
+        state.loggedIn = false
+    })
     //delete Student
         .addCase(deleteStudent.pending, (state) => {
             state.isloading = true;
@@ -79,8 +105,9 @@ const studentSlice = createSlice({
             state.isloading = false;
             state.error = action.error.message;
         })
-    }
-})
+        }
+    })
+  
 
 
 export default studentSlice.reducer;

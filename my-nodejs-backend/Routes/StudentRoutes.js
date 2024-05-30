@@ -7,7 +7,7 @@ Router.post('/logout',logout);
 Router.put('/updateStudent',updateStudent);
 Router.post('/deleteStudent',deleteStudent);
 Router.get('/getStudents',getStudents);
-Router.get('/getStudent:id',getStudentById);
+Router.get('/getStudentById/:id',getStudentById);
 
 
 module.exports = Router;
