@@ -12,6 +12,7 @@ function App() {
   return (
     <Routes>
       <Route path="/usersPg/*" element={<UsersPg />} />
+      <Route path="*" element={<Navigate to="/usersPg/LandingPage/" replace />} />
       <Route element={<ProtectedStudent/>} >
       <Route path="/usersPg/CoursesPage" element={<CoursesPage />} />
         <Route path="/usersPg/StudentProfile" element={<StudentProfile/>} />

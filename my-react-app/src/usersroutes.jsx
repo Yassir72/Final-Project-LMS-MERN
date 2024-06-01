@@ -4,6 +4,7 @@ import {SignUpUser , SignInUser } from "@/pages/auth"
 import ShoppingCart from "./widgets/shopping/shoppingCart";
 import { StudentProfile } from "@/pages/userPages";
 import InstructorProfile from "./pages/userPages/instructorProfile";
+import { Start } from "@/pages/userPages";
 
 export const usersroutes = [
   {
@@ -40,6 +41,8 @@ export const usersroutes = [
       {
         path: "/InstructorProfile",
         element: <InstructorProfile/>,
+        path: "/StartCourse",
+        element: <Start/>,
       },
 
       
