@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const StudentModel = require("../../Models/StudentSchema")
+const CourseModel = require('../../Models/CourseSchema');
 // const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 
@@ -53,8 +54,8 @@ const logout = (req, res) => {
 };
 
 const updateStudent = async (req, res) => {
-    const { id } = req.params;
-    const { firstname, lastname, email, password, username, phoneNumber,Image } = req.body;
+    
+    const { firstname, lastname, email, password, username, phoneNumber,location,birthday,linkedIn,github,id,Image } = req.body;
     
     // Build the update object
     const updateObj = {};
@@ -65,6 +66,11 @@ const updateStudent = async (req, res) => {
     if (username) updateObj.username = username;
     if (phoneNumber) updateObj.phoneNumber = phoneNumber;
     if(Image) updateObj.Image=Image;
+    if(location) updateObj.location = location;
+    if(birthday) updateObj.birthday = birthday;
+    if(linkedIn) updateObj.linkedIn = linkedIn;
+    if(github) updateObj.github = github;
+
 
     try {
         // Find the student by id and update with the update object
@@ -110,7 +116,7 @@ const getStudents = async (req, res) => {
 
 const getStudentById =async (req, res) => {
     const studentId = req.params.id;
-    const student =await StudentModel.findById(studentId);
+    const student =await StudentModel.findById(studentId).populate('courses');
 
     if (!student) {
         res.status(404).json(error);
@@ -120,4 +126,38 @@ const getStudentById =async (req, res) => {
     console.log('Student fetched successfully !');
 }
 
-module.exports = { register, login, logout, updateStudent, deleteStudent, getStudents, getStudentById };
+
+const enroll = async (req, res) => {
+    try {
+        const { studentId, courseId } = req.body;
+
+        // Trouver l'étudiant par ID
+        const student = await StudentModel.findById(studentId);
+
+        // Vérifier si l'étudiant existe
+        if (!student) {
+            return res.status(404).send('Student not found');
+        }
+
+        // Trouver le cours par ID
+        const course = await CourseModel.findById(courseId);
+
+        // Vérifier si le cours existe
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
+
+        // Ajouter le cours à la liste des cours de l'étudiant s'il n'est pas déjà inscrit
+        if (!student.courses.includes(courseId)) {
+            student.courses.push(courseId);
+            await student.save();
+            res.status(200).send('Student enrolled in course successfully');
+        } else {
+            res.status(400).send('Student is already enrolled in this course');
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+module.exports = { register, login, logout, updateStudent, deleteStudent, getStudents, getStudentById,enroll }
