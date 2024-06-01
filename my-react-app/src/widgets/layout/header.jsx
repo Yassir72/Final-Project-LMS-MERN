@@ -1,15 +1,19 @@
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import React from "react";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+
+  const navigate = useNavigate()
+ 
+  const handleLogout = (e) => {
+    e.preventDefault() 
+    localStorage.removeItem('token')
+    navigate('/usersPg/signin')
+    
   };
+
 
   return (
     <nav id="header" className=" w-full z-30 top-0 text-white bg-black">
@@ -23,22 +27,29 @@ const Header = () => {
         <div className="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
           <ul className="list-reset lg:flex justify-end flex-1 items-center">
             <li className="mr-3">
-              <button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline" onClick={() => scrollToSection('hero')}>Start</button>
+               <img src="https://res.cloudinary.com/dxm05ueme/image/upload/v1717155983/c2oeepnmka5hdh1t3ex8.png" alt="" />
             </li>
             <li className="mr-3">
-              <button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline" onClick={() => scrollToSection('courses')}>Courses</button>
+            <Link to='/usersPg/StartCourse'>
+              <button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline" >Start</button>
+            </Link>
+            </li>
+            <li className="mr-3">
+            <Link to='/usersPg/CoursesPage'>
+              <button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline">Courses</button></Link>
             </li>
             <li className="mr-3">
               <Link to='/usersPg/StudentProfile'><button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline">Profile</button></Link>
             </li>
           </ul>
-          <Link to="/usersPg/signin" >
+          
            <button
             id="navAction"
+            onClick={handleLogout}
             className="mx-auto lg:mx-0 hover:underline bg-gray-300 text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
             >Sign Out
            </button>
-          </Link>
+  
         </div>
       </div>
       <hr className="border-b border-gray-100 opacity-25 my-0 py-0" />

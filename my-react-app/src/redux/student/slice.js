@@ -31,6 +31,8 @@ export const deleteStudent = createAsyncThunk('student/deleteStudent', async (id
         })
         .catch((error) => rejectWithValue(error))
 })
+
+
 export const getStudent = createAsyncThunk(
     "student/getStudent",
     async ({ accountType, userId }, { rejectWithValue }) => {
@@ -44,10 +46,20 @@ export const getStudent = createAsyncThunk(
   );
 
 
+  export const editStudent = createAsyncThunk('student/editStudent', async ({ email, username, firstname, lastname, location, phoneNumber, birthday, linkdIn, github, id, Image }, { rejectWithValue }) => {
+    try {
+        const res = await axiosInstance.post('/student/updateStudent', { email, username, firstname, lastname, location, phoneNumber, birthday, linkdIn, github, id, Image });
+        console.log(res.data);
+        return res.data;
+        
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
 const studentSlice = createSlice({
     name : 'student',
     initialState : { students : [] , isloading : false, error : null,
-    // studentInformation: null,
     loggedIn: false,
     isLoading: true,
     },
@@ -102,6 +114,22 @@ const studentSlice = createSlice({
             state.error = false;
         })
         .addCase(addStudent.rejected, (state, action) => {
+            state.isloading = false;
+            state.error = action.error.message;
+        })
+        //Edit Student
+        .addCase(editStudent.pending, (state,) => {console.log(state.students);
+            state.isloading = true;
+            state.error = null;
+        })
+        .addCase(editStudent.fulfilled, (state, action) => {console.log(state.students);
+            state.students=state.students.map((student)=>{ if(student._id==action.payload._id) return action.payload ; 
+                else return student;
+})
+            state.isloading = false;
+            state.error = false;
+        })
+        .addCase(editStudent.rejected, (state, action) => {
             state.isloading = false;
             state.error = action.error.message;
         })
