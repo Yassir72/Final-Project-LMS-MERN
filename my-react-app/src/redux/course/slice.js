@@ -11,15 +11,16 @@ export const getcourses = createAsyncThunk('course/getcourses', async ()=>{
     }
 });
 
-export const getcoursebyID = createAsyncThunk('course/getcoursebyid', async ()=>{
+export const getcoursebyID = createAsyncThunk('course/getcoursebyid', async (courseId, thunkAPI)=>{
     try{ 
-        const res = await axios.get('http://localhost:3000/course/getCourse/6655ef4e7c11b6ba719688c6');
+        const res = await axios.get(`http://localhost:3000/course/getCourse/${courseId}`);
         const data = res.data;
         return data;
     } catch (error) {
-        console.log(error);
+        return thunkAPI.rejectWithValue(error.response.data);
     }
 });
+
 
 export const addCourse = createAsyncThunk('course/addCourse', async({Title, Description, Price, Image, Videos})=>{
     try { 

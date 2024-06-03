@@ -24,6 +24,16 @@ export const StudentProfile = () => {
   const handleShowForm = () => {
     setShowForm(true);
   };
+  const post_date = (date1) => {
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    date1 = date1.split('T')[0];
+    let month = date1.split('-')[1];
+    month = months[month - 1];
+    return `${date1.split('-')[2]} ${month} ${date1.split('-')[0]}`;
+  };
 
   const uploadImage = async () => {
     const data = new FormData();
@@ -145,7 +155,7 @@ export const StudentProfile = () => {
               </li>
               <li className="flex border-b py-2">
                 <span className="font-bold w-24 text-black">Joined:</span>
-                <span className="text-gray-700">{students.createdAt} </span>
+                <span className="text-gray-700">{post_date(students.createdAt)} </span>
               </li>
               <li className="flex border-b py-2">
                 <span className="font-bold w-24 text-black">Mobile:</span>

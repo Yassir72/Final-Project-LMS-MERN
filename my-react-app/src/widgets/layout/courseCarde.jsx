@@ -79,7 +79,7 @@ return(
                       key={course._id}
                       className="card min-h-24 text-sm shadow-lg max-w-sm m-5 mx-auto sm:mx-auto md:m-5 overflow-hidden flex flex-col rounded-lg bg-white p-6 transition duration-300 transform hover:-translate-y-2 hover:shadow-2xl cursor-pointer border border-gray-300"
                    >
-                      <Link to='/usersPg/CourseDetail'
+                      <Link to={`/usersPg/DescriptionCourse/courses/${course._id}`}
                          target="_self"
                          href={course.Description}
                          className="absolute opacity-0 top-0 right-0 left-0 bottom-0"
@@ -90,7 +90,7 @@ return(
                             src={course.Image}
                             alt=""
                          />
-                         <Link to='/usersPg/CourseDetail'
+                         <Link to={`/usersPg/DescriptionCourse/courses/${course._id}`}
                             className="flex justify-center items-center bg-black bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
                             href={course.Description}
                             target="_self"
@@ -150,7 +150,7 @@ return(
                          </div>
                       </div>
                       <h3 className="font-medium text-xl leading-8">
-                      <Link to='/usersPg/CourseDetail'
+                      <Link to={`/usersPg/DescriptionCourse/courses/${course._id}`}
                             href={course.Image}
                             className="block relative group-hover:text-black transition-colors duration-200"
                          >

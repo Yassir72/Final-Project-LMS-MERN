@@ -24,7 +24,6 @@ const ProtectedStudent = () => {
         dispatch(getStudent(payload))
     }, [])
 
-
     return !isLoading && (loggedIn ? <Outlet /> : <Navigate to="/usersPg/signin" />)
 }
 
