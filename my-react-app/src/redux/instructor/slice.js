@@ -2,6 +2,7 @@
 import AddInstructor from '@/pages/dashboard/Instructors/addInstructor';
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
+import axiosInstance from '@/API/axiosConfig';
 
 export const getinstructors = createAsyncThunk('instructor/getinstructors', async ()=>{
     try{
@@ -12,6 +13,18 @@ export const getinstructors = createAsyncThunk('instructor/getinstructors', asyn
         console.log(error);
     }
 });
+
+export const getInstructor = createAsyncThunk(
+    "student/getInstructor",
+    async ({ accountType, userId }, { rejectWithValue }) => {
+      return axiosInstance
+        .get(`/${accountType}/get${accountType.charAt(0).toUpperCase()}${accountType.slice(1)}/${userId}`)
+        .then((res) => { 
+          return res.data;
+        })
+        .catch((err) => rejectWithValue(err.response.data.message));
+    }
+  );
 
 export const addInstructor = createAsyncThunk('instructor/addInstructor', async(
     {Image,name, password, email, phonenumber,
@@ -46,7 +59,7 @@ export const deleteInstructor = createAsyncThunk('instructor/deleteInstructor', 
 
 const instructorSlice = createSlice({
     name : 'instructor',
-    initialState : { instructors : [] , isloading : false, error : null },
+    initialState : { instructors : [], instructor : {} , isloading : false, error : null },
     reducers : {},
     extraReducers : (builder)=>{
     //getinstructors
@@ -60,6 +73,18 @@ const instructorSlice = createSlice({
             state.error = false;
         })
         .addCase(getinstructors.rejected , (state,action)=>{
+            state.isloading = false;
+            state.error = action.error.message;
+        })
+    //get Instructor by ID
+        
+        .addCase(getInstructor.fulfilled , (state , action)=>{
+            state.instructor = action.payload;
+            state.loggedIn = true;
+            state.isloading = false;
+            state.error = false;
+        })
+        .addCase(getInstructor.rejected , (state,action)=>{
             state.isloading = false;
             state.error = action.error.message;
         })
@@ -100,6 +125,7 @@ const instructorSlice = createSlice({
             state.instructors=state.instructors.map((instructor)=>{ if(instructor._id==action.payload._id) return action.payload ; 
                 else return instructor;
 })
+            state.instructor=action.payload;
             state.isloading = false;
             state.error = false;
         })

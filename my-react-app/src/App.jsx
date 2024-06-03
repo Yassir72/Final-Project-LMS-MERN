@@ -5,6 +5,8 @@ import { StudentProfile } from "./pages/userPages";
 import AuthProvider from './context/AuthProvider'
 import Protected from "./Protected";
 import ProtectedStudent from "./ProtectedStudent";
+import ProtectedInstructor from "./ProtectedInstructor";
+import InstructorProfile from "./pages/userPages/instructorProfile";
 
 
 
@@ -13,6 +15,13 @@ function App() {
     <Routes>
       <Route path="/usersPg/*" element={<UsersPg />} />
       <Route path="*" element={<Navigate to="/usersPg/LandingPage/" replace />} />
+
+      <Route element={<ProtectedInstructor/>} >
+      <Route path="/usersPg/CoursesPage" element={<CoursesPage />} />
+        <Route path="/usersPg/InstructorProfile" element={<InstructorProfile/>} />
+        
+      </Route> 
+
       <Route element={<ProtectedStudent/>} >
       <Route path="/usersPg/CoursesPage" element={<CoursesPage />} />
         <Route path="/usersPg/StudentProfile" element={<StudentProfile/>} />

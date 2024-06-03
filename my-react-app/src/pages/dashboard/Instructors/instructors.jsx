@@ -97,7 +97,7 @@ export function Instructors() {
               </tr>
             </thead>
             <tbody>
-              {currentInstructors.map(({Image, name, email, phonenumber, specialite, _id, createdAt }, key) => {
+              {currentInstructors.map(({Image, name, email, phonenumber,username, specialite, _id, createdAt }, key) => {
                 const className = `py-3 px-5 ${
                   key === currentInstructors.length - 1 ? "" : "border-b border-blue-gray-50"
                 }`;
@@ -136,7 +136,7 @@ export function Instructors() {
                       </Typography>
                     </td>
                     <td className={className}>
-                      <Typography as="button" className="text-xs font-semibold text-green-500" onClick={() => { setEditCard(true); setEdited({ name, email, phonenumber, specialite, _id }) }}>
+                      <Typography as="button" className="text-xs font-semibold text-green-500" onClick={() => { setEditCard(true); setEdited({ name, email, phonenumber,username, specialite, _id }) }}>
                         Edit
                       </Typography>
                     </td>

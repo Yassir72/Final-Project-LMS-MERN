@@ -76,10 +76,10 @@ const addInstructor = async (req,res)=>{
 
 
 
-const UpdateInstructor = async (req, res) => {
+const UpdateInstructor = async (req, res) => { console.log("here");
 
     const { name, email, phonenumber, specialite, username, id ,Image} = req.body
-
+    console.log(id);
     await InstructorModel.findOneAndUpdate({ _id: id }, {
         $set: {
             name: name,
@@ -116,7 +116,7 @@ const getAllInstructor = async (req, res) => {
 }
 
 
-const getInstructorById = async (req, res) => {
+const getInstructorById = async (req, res) => { 
     try {
         const id = req.params.id;
         const instructor = await InstructorModel.findById(id);

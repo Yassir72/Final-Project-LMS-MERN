@@ -117,7 +117,6 @@ const getStudents = async (req, res) => {
 const getStudentById =async (req, res) => {
     const studentId = req.params.id;
     const student =await StudentModel.findById(studentId).populate('courses');
-
     if (!student) {
         res.status(404).json(error);
         console.log('Student not found !');

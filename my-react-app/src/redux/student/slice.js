@@ -122,10 +122,8 @@ const studentSlice = createSlice({
             state.isloading = true;
             state.error = null;
         })
-        .addCase(editStudent.fulfilled, (state, action) => {console.log(state.students);
-            state.students=state.students.map((student)=>{ if(student._id==action.payload._id) return action.payload ; 
-                else return student;
-})
+        .addCase(editStudent.fulfilled, (state, action) => {
+            state.students=action.payload;
             state.isloading = false;
             state.error = false;
         })

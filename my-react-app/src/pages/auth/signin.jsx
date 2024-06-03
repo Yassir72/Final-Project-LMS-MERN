@@ -23,11 +23,16 @@ export function SignInUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
+    try { 
       const response = await axiosInstance.post("/user/login", { email, password, role }, { withCredentials: true });
       const token = response.data.token;
-      localStorage.setItem("token", token);
-      navigate("/usersPg/CoursesPage");
+      localStorage.setItem("token", token); 
+      if(response.data.role==='Student'){
+      navigate("/usersPg/StudentProfile");
+      }
+      else { 
+        navigate("/usersPg/InstructorProfile");
+      }
       setSuccessMsg('Login Successful!');
       setShowSuccess(true);
       setTimeout(() => {
@@ -49,15 +54,7 @@ export function SignInUser() {
     }
   };
 
-  const handleRoleChange = (e) => {
-    const selectedRole = e.target.value;
-    if (selectedRole !== "Instructor" && selectedRole !== "Student") {
-      setErrMsg('Role must be either "Instructor" or "Student"');
-    } else {
-      setErrMsg('');
-    }
-    setRole(selectedRole);
-  };
+  
 
   return (
     <section className="m-8 flex gap-4">
@@ -103,19 +100,13 @@ export function SignInUser() {
             <Typography color="blue-gray" className="mb-1 font-medium">
              Are you an Instructor or a Student ?
             </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="Instructor or Student"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              id="role"
-              name="role"
-              value={role}
-              onChange={handleRoleChange}
-            />
+            <select name="role" class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400" 
+               onChange={(e)=>{setRole(e.target.value)}}>
+                  <option value="">---</option>
+                  <option value="Student">Student</option>
+                  <option value="Instructor">Instructor</option>
+               </select>
+            
           </div>
           <Button type="submit" className="mt-6 w-full">
             Sign In

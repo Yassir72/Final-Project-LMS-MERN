@@ -19,6 +19,7 @@ function EditInstructor({show,EditContent}){
    const [phoneNumber,setPhoneNumber] = useState(EditContent.phonenumber);
    const [speciality,setSpecialty] = useState(EditContent.specialite);
    const [username,setUsername] = useState(EditContent.username);
+   const [imageEdited,setImageEdited] = useState(false);
 
    const uploadImage = async () => {
       const data = new FormData();
@@ -50,6 +51,7 @@ function EditInstructor({show,EditContent}){
     }
     ;
     const Handlerphoto = (event) => {
+      setImageEdited(true);
       const file = event.target.files[0];
       console.log(file)
       setImage(file);
@@ -58,10 +60,13 @@ function EditInstructor({show,EditContent}){
     };
 
    async function editButton(){ 
-      const secureUrl = await uploadImage(); // Call uploadImage function
-   if (secureUrl) {
-      dispatch(editInstructor({id : EditContent._id, email: email, name : name, phonenumber : phoneNumber, specialite : speciality, username: username, Image: secureUrl}))
-    }
+      if(imageEdited){ 
+         const secure_url = await uploadImage();
+         setImage(secure_url);
+       }
+
+      dispatch(editInstructor({id : EditContent._id, email: email, name : name, phonenumber : phoneNumber, specialite : speciality, username: username, Image: image}))
+
    }
 
     return (

@@ -8,7 +8,7 @@ Router.post('/addInstructor',addInstructor);
 Router.put('/updateInstructor',UpdateInstructor);
 Router.post('/deleteInstructor',deleteInstructor);
 Router.get('/getInstructors',getAllInstructor);
-Router.get('/getInstructor:id',getInstructorById);
+Router.get('/getInstructor/:id',getInstructorById);
 
 
 module.exports=Router;

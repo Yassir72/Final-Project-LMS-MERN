@@ -43,28 +43,62 @@ const register = async (req, res) => {
     }
 }
 
-const login = async (req, res) => {
-    const { email, password, role } = req.body;
+// const login = async (req, res) => { 
+//     const { email, password, role } = req.body;
+//     let user;
+
+//     try {
+//         if (role === 'Student') { 
+//             user = await StudentModel.findOne({ email });
+            
+//         } else if (role === 'Instructor') {
+//             user = await InstructorModel.findOne({ email });
+//         } else {
+//             return res.status(400).json({ error: 'Invalid role provided' });
+//         }
+
+//         if (!user) {
+//             return res.status(404).json({ error: 'Email or password incorrect!' });
+//         }
+
+//         // const isPasswordValid = await bcrypt.compare(password, user.password);
+//         StudentPasswordValid = await StudentModel.findOne({ password });
+
+//         InstructorPasswordValid = await InstructorModel.findOne({ password });
+//         if (!StudentPasswordValid || !InstructorPasswordValid) {
+//             return res.status(404).json({ error: 'Email or password incorrect!' });
+//         }
+
+//         const token = jwt.sign({ userId: user._id, accountType: role }, process.env.SECRET_KEY, { expiresIn: '2h' });
+//         return res.json({ role: user.role , message: 'Logged in successfully!', token });
+                
+//     } catch (error) {
+//         console.error('Error during login:', error);
+//         return res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// };
+
+const login = async (req, res) => { 
+    const { email, password } = req.body;
     let user;
-
+    let role;
     try {
-        if (role === 'Student') {
-            user = await StudentModel.findOne({ email });
-        } else if (role === 'Instructor') {
-            user = await InstructorModel.findOne({ email });
-        } else {
-            return res.status(400).json({ error: 'Invalid role provided' });
-        }
-
-        if (!user) {
-            return res.status(404).json({ error: 'Email or password incorrect!' });
-        }
-
-        // const isPasswordValid = await bcrypt.compare(password, user.password);
-        StudentPasswordValid = await StudentModel.findOne({ password });
-        InstructorPasswordValid = await InstructorModel.findOne({ password });
-        if (!StudentPasswordValid || !InstructorPasswordValid) {
-            return res.status(404).json({ error: 'Email or password incorrect!' });
+        await StudentModel.findOne({email})
+        .then((us)=>{ 
+            if(us){
+            role = 'Student';
+            if(us.password==password) user = us;
+            }
+        })
+        if(!role){
+        await InstructorModel.findOne({email})
+        .then((us)=>{
+            
+            if(us){
+            role = 'Instructor';
+            if(us.password==password) user = us;
+            }
+        })
         }
 
         const token = jwt.sign({ userId: user._id, accountType: role }, process.env.SECRET_KEY, { expiresIn: '2h' });

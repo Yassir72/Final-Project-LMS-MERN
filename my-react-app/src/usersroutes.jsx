@@ -41,6 +41,8 @@ export const usersroutes = [
       {
         path: "/InstructorProfile",
         element: <InstructorProfile/>,
+      },
+      {
         path: "/StartCourse",
         element: <Start/>,
       },

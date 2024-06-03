@@ -7,7 +7,8 @@ import FooterPage from "@/widgets/layout/footerPages";
 
 export const StudentProfile = () => {
   const dispatch = useDispatch();
-  const { students, isLoading, error } = useSelector((state) => state.students);
+  const { students, isLoading, error } = useSelector((state) =>{console.log(state.students); return state.students;});
+  
   const [username, setUserName] = useState(students.username);
   const [email, setEmail] = useState(students.email)
   const [phonenumber, setPhonenumber] = useState(students.phoneNumber)
