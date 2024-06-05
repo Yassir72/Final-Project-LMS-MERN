@@ -11,9 +11,9 @@ export const getcourses = createAsyncThunk('course/getcourses', async ()=>{
     }
 });
 
-export const getcoursebyID = createAsyncThunk('course/getcoursebyid', async ()=>{
-    try{ 
-        const res = await axios.get('http://localhost:3000/course/getCourse/6655ef4e7c11b6ba719688c6');
+export const getcoursebyID = createAsyncThunk('course/getcoursebyid', async (courseID)=>{
+    try{  console.log(courseID);
+        const res = await axios.get(`http://localhost:3000/course/getCourse/${courseID}`);
         const data = res.data;
         return data;
     } catch (error) {

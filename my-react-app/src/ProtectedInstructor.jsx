@@ -23,7 +23,7 @@ const ProtectedInstructor = () => {
     const dispatch = useDispatch()
     const payload = jwtDecode(token)
 
-    useEffect(() => { 
+    useEffect(() => { console.log(payload);
         dispatch(getInstructor(payload))
     }, [])
 

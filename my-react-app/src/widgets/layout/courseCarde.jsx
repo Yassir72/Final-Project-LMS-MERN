@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getcourses } from '@/redux/course/slice';
+import { getcourses,getcoursebyID } from '@/redux/course/slice';
 import { Rating } from "@material-tailwind/react"
-import { Link } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 export function CourseCarde() {
-
+   const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
    const [itemsPerPage] = useState(6);
    const dispatch = useDispatch();
    const { courses } = useSelector((state) => state.courses);
+   console.log(courses);
    const [searchItem, setSearchItem] = useState('');
    const [filteredCourses, setFilteredCourses] = useState([]);
 
@@ -36,7 +37,7 @@ export function CourseCarde() {
    useEffect(() => {
       setFilteredCourses(courses);
    }, [courses]);
-
+console.log(currentCourses);
 
 return(
 <>
@@ -74,27 +75,19 @@ return(
           </div>   
           <div className="mt-12 mb-8 flex flex-col gap-12">
              <div className="section cards mx-auto border grid md:grid-cols-3 md:px-12 bg-gray-200 text-gray-800">
-                {currentCourses.map((course) => (
+                {currentCourses.map((course) => ( 
+                  <Link to={`/usersPg/CourseDetail/${course._id}`}>
                    <div
                       key={course._id}
                       className="card min-h-24 text-sm shadow-lg max-w-sm m-5 mx-auto sm:mx-auto md:m-5 overflow-hidden flex flex-col rounded-lg bg-white p-6 transition duration-300 transform hover:-translate-y-2 hover:shadow-2xl cursor-pointer border border-gray-300"
                    >
-                      <Link to='/usersPg/CourseDetail'
-                         target="_self"
-                         href={course.Description}
-                         className="absolute opacity-0 top-0 right-0 left-0 bottom-0"
-                      ></Link>
                       <div className="relative mb-4 rounded-2xl">
                          <img
                             className="max-h-80 rounded-2xl w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
                             src={course.Image}
                             alt=""
                          />
-                         <Link to='/usersPg/CourseDetail'
-                            className="flex justify-center items-center bg-black bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
-                            href={course.Description}
-                            target="_self"
-                            rel="noopener noreferrer"
+                         <div className="flex justify-center items-center bg-black bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
                          >
                             Read Course
                             <svg
@@ -111,7 +104,7 @@ return(
                                   d="M13 5l7 7-7 7M5 5l7 7-7 7"
                                ></path>
                             </svg>
-                         </Link>
+                         </div>
                          <button
                             className="absolute top-2 right-2 p-2 bg-gray-800 text-white rounded-full flex items-center justify-center transition duration-300 transform scale-0 group-hover:scale-100"
                             onClick={() => handleAddToCart(course)}
@@ -150,12 +143,9 @@ return(
                          </div>
                       </div>
                       <h3 className="font-medium text-xl leading-8">
-                      <Link to='/usersPg/CourseDetail'
-                            href={course.Image}
-                            className="block relative group-hover:text-black transition-colors duration-200"
-                         >
+                      <div className="block relative group-hover:text-black transition-colors duration-200">
                             {course.Title}
-                      </Link>
+                      </div>
                       </h3>
                       <div className="mt-2">
                          <div className="flex items-center">
@@ -212,7 +202,8 @@ return(
                          <div className="text-xs">{course.Description}</div>
                       </div>
                    </div>
-                ))}
+                   </Link>
+                  ))}
              </div>
              <div className="flex justify-center">
              <button onClick={()=>setCurrentPage(currentPage-1)}

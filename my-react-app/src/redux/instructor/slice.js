@@ -59,7 +59,7 @@ export const deleteInstructor = createAsyncThunk('instructor/deleteInstructor', 
 
 const instructorSlice = createSlice({
     name : 'instructor',
-    initialState : { instructors : [], instructor : {} , isloading : false, error : null },
+    initialState : { instructors : [], instructor : {} , isloading : true, error : null, loggedIn: false },
     reducers : {},
     extraReducers : (builder)=>{
     //getinstructors

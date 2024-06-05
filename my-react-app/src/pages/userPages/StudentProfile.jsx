@@ -71,7 +71,7 @@ export const StudentProfile = () => {
   
  }
 
-  return (
+  return students!={} && (
   <>  
    <Header/> 
     <div className="h-full bg-gray-200 p-8">

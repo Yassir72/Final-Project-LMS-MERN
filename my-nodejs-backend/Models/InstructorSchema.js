@@ -9,7 +9,6 @@ const InstructorSchema = new mongoose.Schema({
     specialite: { type: String },
     username: { type: String, required: true },
     Image:{ type:String},
-    role : { type: String, enum: ['Instructor'],default: 'Instructor' },
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course'}],
 }, { timestamps: true })
 

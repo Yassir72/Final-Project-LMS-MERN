@@ -4,13 +4,17 @@ import { getcoursebyID } from '@/redux/course/slice'
 import VideoPlayer from "../dashboard/Courses/videoPlayer";
 import Header from "@/widgets/layout/header";
 import FooterPage from "@/widgets/layout/footerPages";
+import { useParams } from "react-router-dom";
 
 function CourseDetail() {
     const dispatch = useDispatch();
 
     const { courseOne } = useSelector((state) => state.courses);
+    console.log(courseOne);
     const [vtitle,setVtitle] = useState();
     const [description,setDescription] = useState();
+    const {id} = useParams();
+    console.log(id);
 
 
     // const [videos,setVideos]=useState(courses[0].Videos);
@@ -20,8 +24,8 @@ function CourseDetail() {
         setDescription(description)
     }
 
-    function display_video(){ console.log(vtitle);console.log(description);
-        if(vtitle && description){ console.log("aaa");
+    function display_video(){ 
+        if(vtitle && description){
             return(
               <div className="container w-full p-6 mx-auto space-y-6 sm:space-y-12">
               <div className="h-[540px] block gap-3 mx-auto sm:max-w-full group lg:grid lg:grid-cols-12 bg-gray-50">
@@ -64,7 +68,7 @@ function CourseDetail() {
 
 
   useEffect(() => { 
-        dispatch(getcoursebyID());
+        dispatch(getcoursebyID(id));
         
       }, [dispatch]);
 
@@ -101,125 +105,38 @@ function CourseDetail() {
 </section>
 <section className="w-full py-12 md:py-16 lg:py-20">
   <div className="container mx-auto px-4 md:px-6">
-    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-8">
-      <h2 className="text-3xl font-bold tracking-tight">Featured Videos</h2>
+    <div className="flex flex-col md:flex-row items-start p-4 md:items-center justify-between gap-4 md:gap-8">
+      <h2 className="text-3xl font-bold tracking-tight">Videos</h2>
     </div>
     <div className="overflow-x-auto pb-4 scrollbar-custom scroll-smooth">
       <div className="flex space-x-6 w-max min-w-full">
-        <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out min-w-[300px]">
-          <a className="absolute inset-0 z-10" href="#">
+      { courseOne.Videos.map(({title,v_image,description},key) => {   
+                return(
+            
+          <div key={key} 
+          className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out min-w-[300px]">
+          <a className="absolute inset-0 z-10" href="#" onClick={()=>{define_video(title,description)}}>
             <span className="sr-only">View</span>
           </a>
           <img
             alt="Video 1"
             className="object-cover w-full aspect-[3/2]"
             height="200"
-            src="/placeholder.svg"
+            src={v_image}
             width="300"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="flex items-end h-full p-4">
+            <div className="flex items-end justify-center h-full pb-7">
               <h3 className="text-white font-semibold text-lg drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Introducing the New Product Line
+              {title}
               </h3>
             </div>
           </div>
-        </div>
-        <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out min-w-[300px]">
-          <a className="absolute inset-0 z-10" href="#">
-            <span className="sr-only">View</span>
-          </a>
-          <img
-            alt="Video 2"
-            className="object-cover w-full aspect-[3/2]"
-            height="200"
-            src="/placeholder.svg"
-            width="300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="flex items-end h-full p-4">
-              <h3 className="text-white font-semibold text-lg drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Behind the Scenes: Product Photoshoot
-              </h3>
-            </div>
           </div>
-        </div>
-        <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out min-w-[300px]">
-          <a className="absolute inset-0 z-10" href="#">
-            <span className="sr-only">View</span>
-          </a>
-          <img
-            alt="Video 3"
-            className="object-cover w-full aspect-[3/2]"
-            height="200"
-            src="/placeholder.svg"
-            width="300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="flex items-end h-full p-4">
-              <h3 className="text-white font-semibold text-lg drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Product Demo: How to Use Our New Feature
-              </h3>
-            </div>
-          </div>
-        </div>
-        <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out min-w-[300px]">
-          <a className="absolute inset-0 z-10" href="#">
-            <span className="sr-only">View</span>
-          </a>
-          <img
-            alt="Video 4"
-            className="object-cover w-full aspect-[3/2]"
-            height="200"
-            src="/placeholder.svg"
-            width="300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="flex items-end h-full p-4">
-              <h3 className="text-white font-semibold text-lg drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Customer Testimonial: Why They Love Our Product
-              </h3>
-            </div>
-          </div>
-        </div>
-        <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out min-w-[300px]">
-          <a className="absolute inset-0 z-10" href="#">
-            <span className="sr-only">View</span>
-          </a>
-          <img
-            alt="Video 5"
-            className="object-cover w-full aspect-[3/2]"
-            height="200"
-            src="/placeholder.svg"
-            width="300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="flex items-end h-full p-4">
-              <h3 className="text-white font-semibold text-lg drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Expert Interview: Industry Insights
-              </h3>
-            </div>
-          </div>
-        </div>
-        <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out min-w-[300px]">
-          <a className="absolute inset-0 z-10" href="#">
-            <span className="sr-only">View</span>
-          </a>
-          <img
-            alt="Video 6"
-            className="object-cover w-full aspect-[3/2]"
-            height="200"
-            src="/placeholder.svg"
-            width="300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="flex items-end h-full p-4">
-              <h3 className="text-white font-semibold text-lg drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Product Launch Highlights
-              </h3>
-            </div>
-          </div>
-        </div>
+            
+            )
+            })}
+        
       </div>
     </div>
   </div>

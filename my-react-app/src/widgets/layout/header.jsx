@@ -2,20 +2,29 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain } from '@fortawesome/free-solid-svg-icons';
+import { jwtDecode } from "jwt-decode"
 
 const Header = () => {
-
+  
   const navigate = useNavigate()
- 
+  const token = localStorage.getItem("token")
+  let payload = {};
+  if(token){ payload = jwtDecode(token)}
+  
+  console.log(payload);
   const handleLogout = (e) => {
     e.preventDefault() 
     localStorage.removeItem('token')
     navigate('/usersPg/signin')
-    
   };
-
-
-  return (
+  function user_Profile(){ 
+  if(payload.accountType=='Instructor') 
+    return'/usersPg/InstructorProfile'
+  else
+  return'/usersPg/StudentProfile'
+  }
+  
+  return ( 
     <nav id="header" className=" w-full z-30 top-0 text-white bg-black">
       <div className="container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
         <div className="pl-4 flex items-center">
@@ -39,7 +48,7 @@ const Header = () => {
               <button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline">Courses</button></Link>
             </li>
             <li className="mr-3">
-              <Link to='/usersPg/StudentProfile'><button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline">Profile</button></Link>
+              <Link to={user_Profile()}><button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline">Profile</button></Link>
             </li>
           </ul>
           
