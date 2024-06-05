@@ -5,11 +5,11 @@ import EditInstructor from "../dashboard/Instructors/editInstructor";
 import Header from "@/widgets/layout/header";
 import FooterPage from "@/widgets/layout/footerPages";
 import AddCourse from "../dashboard/Courses/addCourse";
+import { Link } from "react-router-dom";
 
 
 export const InstructorProfile = () => {
-  const { instructor, isLoading, error } = useSelector((state) => {console.log(state.instructors); return state.instructors});
-  console.log(instructor);
+  const { instructor } = useSelector((state) => { return state.instructors});
   const [username, setUserName] = useState(instructor.username);
   const [email, setEmail] = useState(instructor.email)
   const [phonenumber, setPhonenumber] = useState(instructor.phonenumber)
@@ -122,7 +122,7 @@ export const InstructorProfile = () => {
       </div>
   <div className="bg-white rounded-lg shadow-xl p-8">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="text-xl text-gray-900 font-bold">Enrolled Courses</h4>
+        <h4 className="text-xl text-gray-900 font-bold">My Courses</h4>
         <button onClick={() => setAddCard(true)}
              className="flex items-center bg-black hover:bg-gray-900 text-white px-4 py-2 rounded text-sm space-x-2 transition duration-100">
               <svg
@@ -137,26 +137,27 @@ export const InstructorProfile = () => {
             </button>
       </div>
         <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 max-w-6xl">
-          {/* {students.courses.map((course) => ( */}
-            <div  className="flex flex-col bg-gray-200 rounded-lg p-4 m-2">
+          {instructor.courses.map((course) => (
+            <Link to={`InstPg/CourseDetail/${course._id}`}
+             key={course._id} className="flex flex-col bg-gray-200 rounded-lg p-4 m-2">
               <img
-                src='https://wallpaperset.com/w/full/c/9/0/522708.jpg'
-                alt='image'
+                src={course.Image}
+                alt={course.Title}
                 className="h-40 bg-gray-400 rounded-lg object-cover w-full"
               />
               <div className="flex flex-col items-start mt-4">
-                <h4 className="text-xl font-semibold">aaaaaa</h4>
-                <p className="text-sm">hhhhh</p>
+                <h4 className="text-xl font-semibold">{course.Title}</h4>
+                <p className="text-sm">{course.Description}</p>
               </div>
-            </div>
-          {/* ))} */}
+            </Link>
+          ))}
         </div>
       </div>
-      <FooterPage/>
+      
     </div>
-
+<FooterPage/>
     {editCard && <EditInstructor show={hideEditCard} EditContent={edited}/> }
-    {addCard && <AddCourse show={hideAddCard}/>}
+    {addCard && <AddCourse show={hideAddCard} id={instructor._id}/>}
   </>
   
   )

@@ -81,7 +81,7 @@ const register = async (req, res) => {
 const login = async (req, res) => { 
     const { email, password } = req.body;
     let user;
-    let role;
+    let role = null;
     try {
         await StudentModel.findOne({email})
         .then((us)=>{ 
@@ -90,17 +90,22 @@ const login = async (req, res) => {
             if(us.password==password) user = us;
             }
         })
-        if(!role){
+        if(role != 'Student'){
         await InstructorModel.findOne({email})
         .then((us)=>{
-            
             if(us){
             role = 'Instructor';
             if(us.password==password) user = us;
             }
         })
         }
+        if(role !='Instructor'){
+            return res.status(404).json({ error: 'Email or password incorrect!' });
+        }
 
+        if(!user){ 
+            return res.status(404).json({ error: 'Email or password incorrect!' });
+         }
         const token = jwt.sign({ userId: user._id, accountType: role }, process.env.SECRET_KEY, { expiresIn: '2h' });
         return res.json({ role: user.role , message: 'Logged in successfully!', token });
                 

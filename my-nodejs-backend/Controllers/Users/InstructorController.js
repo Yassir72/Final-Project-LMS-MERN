@@ -119,7 +119,7 @@ const getAllInstructor = async (req, res) => {
 const getInstructorById = async (req, res) => { 
     try {
         const id = req.params.id;
-        const instructor = await InstructorModel.findById(id);
+        const instructor = await InstructorModel.findById(id).populate('courses');
         
         if (!instructor) {
             return res.status(404).send("Instructor not found");

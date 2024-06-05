@@ -78,7 +78,7 @@ const Card3Presentation = () => {
         ))}
       </div>
       <div className="flex justify-center overflow-hidden">
-          <Link to='/usersPg/CoursesPage'>
+          <Link to='/StuPg/CoursesPage'>
             <button className="bg-black text-white font-bold rounded-full py-5 px-10 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
               Discover More Courses 
             </button>

@@ -1,4 +1,5 @@
 const CourseModel = require ('../Models/CourseSchema');
+const InstructorModel = require("../Models/InstructorSchema");
 
 const getCourses = async (req,res)=>{
     try{
@@ -28,7 +29,7 @@ const getCourseById = async (req,res)=>{
 
 const addCourse = async (req, res) => {
     try {
-        const { Title, Description, Price, Image, Videos } = req.body;
+        const { Title,id, Description, Price, Image, Videos } = req.body;
 
         console.log(req.body);
 
@@ -42,6 +43,30 @@ const addCourse = async (req, res) => {
             Price,
             Videos
         });
+
+        const instructor = await InstructorModel.findById(id);
+
+        await InstructorModel.deleteOne({ _id: id })
+        .then((Instructor) => console.log(Instructor))
+        .catch((err) => console.log(err))
+
+        console.log("this is Instructor : " ,instructor);
+        let courses = instructor.courses;
+        courses.push({_id : newCourse._id})
+        console.log("this newCourses :" ,courses);
+        let newInstuctor = {
+            _id : id,
+            name : instructor.name,
+            password : instructor.password,
+            email : instructor.email,
+            phonenumber : instructor.phonenumber,
+            specialite : instructor.specialite,
+            username : instructor.username,
+            Image : instructor.Image,
+            courses : courses
+        }
+        
+        const LastInstructor = await InstructorModel.create(newInstuctor);
 
         return res.status(201).json(newCourse);
     } catch (err) {

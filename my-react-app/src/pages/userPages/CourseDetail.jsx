@@ -81,29 +81,9 @@ function CourseDetail() {
 	
            {display_video()}
        
-<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 "> 
-    <article >
-        <section className="mt-6 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-8">
-            { courseOne.Videos.map(({title,v_image,description},key) => {   
-                return(
-            <article key={key} 
-             className="relative hover:bg-black  w-full h-64  group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out">
-                <div className="absolute bg-black bg-opacity-25 inset-0 transition duration-300 ease-in-out"></div>
-                <div style={{backgroundImage:`url(${v_image})`,opacity:.8}} className=" bg-cover relative w-full h-full px-4 sm:px-6 lg:px-4 flex justify-center items-center">
-                    
-                        <a href="#" onClick={()=>{define_video(title,description)}} className="relative w-full h-full px-4 sm:px-6 lg:px-4 flex justify-center items-end" >
-                            
-                            <p className="mb-6 text-white ">{title}</p>
-                        </a>
-                    
-                </div>
-            </article>)
-            })}
-        </section>
-    </article>
-</section>
-</section>
-<section className="w-full py-12 md:py-16 lg:py-20">
+
+
+<section className="w-full py-4">
   <div className="container mx-auto px-4 md:px-6">
     <div className="flex flex-col md:flex-row items-start p-4 md:items-center justify-between gap-4 md:gap-8">
       <h2 className="text-3xl font-bold tracking-tight">Videos</h2>
@@ -114,16 +94,14 @@ function CourseDetail() {
                 return(
             
           <div key={key} 
-          className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out min-w-[300px]">
+          className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out h-[200px] w-[300px] ">
           <a className="absolute inset-0 z-10" href="#" onClick={()=>{define_video(title,description)}}>
             <span className="sr-only">View</span>
           </a>
           <img
             alt="Video 1"
-            className="object-cover w-full aspect-[3/2]"
-            height="200"
+            className="object-cover h-full w-full"       
             src={v_image}
-            width="300"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="flex items-end justify-center h-full pb-7">
@@ -141,7 +119,7 @@ function CourseDetail() {
     </div>
   </div>
 </section>
-
+</section>
 
 
 

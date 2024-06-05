@@ -10,6 +10,7 @@ const InstructorSchema = new mongoose.Schema({
     username: { type: String, required: true },
     Image:{ type:String},
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course'}],
+    enrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course'}],
 }, { timestamps: true })
 
 const InstructorModel = new mongoose.model('Instructor', InstructorSchema)

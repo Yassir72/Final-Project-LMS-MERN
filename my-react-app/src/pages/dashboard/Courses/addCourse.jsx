@@ -215,17 +215,21 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addCourse } from "@/redux/course/slice";
+import { jwtDecode } from "jwt-decode"
 
-function AddCourse({ show }) {
+function AddCourse({ show,id }) {
   const dispatch = useDispatch();
   const [image, setImage] = useState();
   const [title, setTitle] = useState("");
+  const [author_id, setAuthor_id] = useState(id);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [video, setVideo] = useState(null);
   const [videos, setVideos] = useState([
     { v_image: "", title: "", description: "", videoUrl: "" },
   ]);
+
+  // if(id) { setAuthor_id(id) }
 
   function addVideo() {
     setVideos([...videos, { v_image: "", title: "", description: "", videoUrl: "" }]);
@@ -370,19 +374,18 @@ function AddCourse({ show }) {
     const secureUrl = await uploadImage();
     if (secureUrl) { 
       dispatch(
-        addCourse({ Title: title, Description: description, Price: price, Image: secureUrl, Videos : videos })
+        addCourse({ Title: title, id : author_id, Description: description, Price: price, Image: secureUrl, Videos : videos })
       );
     }
   }
 
   return (
-    <div className="overflow-y-scroll h-screen w-full h-full flex items-center justify-center fixed top-0 left-0 bg-gray-100 bg-opacity-70 inset-0 z-50">
-      <div className="w-96">
-        <div className="m-auto">
-          <div>
-            <div className="mt-5 bg-white rounded-lg shadow">
-              <div className="flex">
-                <div className="flex flex-row-reverse p-3">
+    <div className=" h-screen w-full h-full flex items-center justify-center fixed top-0 left-0 bg-gray-100 bg-opacity-70 inset-0 z-50">
+
+          
+            <div className="overflow-y-scroll w-96 h-5/6 bg-white rounded-lg shadow">
+              <div className="sticky top-0 z-50 bg-white flex">
+                <div className=" flex flex-row-reverse p-3">
                   <button onClick={show} className="btn btn-square btn-outline">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -402,6 +405,11 @@ function AddCourse({ show }) {
                 </div>
               </div>
               <div className="px-5 pb-5">
+                 {!author_id && <input
+                  placeholder="Author ID"
+                  onChange={(e) => setAuthor_id(e.target.value)}
+                  className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
+                />}
                 <input
                   placeholder="Title"
                   value={title}
@@ -438,7 +446,7 @@ function AddCourse({ show }) {
               </div>
               <div className="px-5"></div>
               <hr className="mt-4" />
-              <div className="flex justify-center p-3">
+              <div className="sticky top-0 z-50 bg-white flex justify-center p-3">
                 <div className="flex-initial pl-3">
                   <button
                     type="button"
@@ -469,9 +477,8 @@ function AddCourse({ show }) {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          
+
     </div>
   );
 }

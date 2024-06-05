@@ -31,7 +31,7 @@ export function Start() {
                     <div class="flex space-x-6 items-center">
                         <img src="https://res.cloudinary.com/dxm05ueme/image/upload/v1717168958/omlxekfcbc0dlsitt7w7.png" class="w-auto h-24 rounded-lg"/>
                         <div>
-                            <p class="font-semibold text-1xl">4</p>
+                            <p class="font-semibold text-1xl">{students.courses.length || 0}</p>
                             <p class="font-semibold text-1xl text-gray-400">Courses</p>
                         </div>              
                     </div>

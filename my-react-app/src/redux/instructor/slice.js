@@ -28,10 +28,10 @@ export const getInstructor = createAsyncThunk(
 
 export const addInstructor = createAsyncThunk('instructor/addInstructor', async(
     {Image,name, password, email, phonenumber,
-    specialite,username})=>{
+    specialite,username,courses})=>{
     try { 
         const res = await axios.post('http://localhost:3000/instructor/addInstructor',
-        {name, password, email, phonenumber,specialite,username,Image})
+        {name, password, email, phonenumber,specialite,username,Image,courses})
         return res.data;
     } catch (error) {
         console.log(error);

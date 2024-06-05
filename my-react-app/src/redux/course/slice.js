@@ -22,9 +22,9 @@ export const getcoursebyID = createAsyncThunk('course/getcoursebyid', async (cou
 });
 
 
-export const addCourse = createAsyncThunk('course/addCourse', async({Title, Description, Price, Image, Videos})=>{
+export const addCourse = createAsyncThunk('course/addCourse', async({Title,id, Description, Price, Image, Videos})=>{
     try { 
-        const res = await axios.post('http://localhost:3000/course/addCourse', {Title, Description, Price, Image, Videos})
+        const res = await axios.post('http://localhost:3000/course/addCourse', {Title, id, Description, Price, Image, Videos})
         return res.data;
     } catch (error) {
         console.log(error);

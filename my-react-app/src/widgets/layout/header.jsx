@@ -19,10 +19,16 @@ const Header = () => {
   };
   function user_Profile(){ 
   if(payload.accountType=='Instructor') 
-    return'/usersPg/InstructorProfile'
+    return'/InstPg/InstructorProfile'
   else
-  return'/usersPg/StudentProfile'
+  return'/StuPg/StudentProfile'
   }
+  function course_path(){ 
+    if(payload.accountType=='Instructor') 
+      return'/InstPg/CoursesPage'
+    else
+    return'/StuPg/CoursesPage'
+    }
   
   return ( 
     <nav id="header" className=" w-full z-30 top-0 text-white bg-black">
@@ -44,7 +50,7 @@ const Header = () => {
             </Link>
             </li>
             <li className="mr-3">
-            <Link to='/usersPg/CoursesPage'>
+            <Link to={course_path()}>
               <button className="inline-block py-2 px-4 text-white font-bold no-underline hover:underline">Courses</button></Link>
             </li>
             <li className="mr-3">

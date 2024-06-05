@@ -3,9 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getcourses,getcoursebyID } from '@/redux/course/slice';
 import { Rating } from "@material-tailwind/react"
 import { useNavigate,Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"
 
 export function CourseCarde() {
    const navigate = useNavigate();
+   const token = localStorage.getItem("token")
+  let payload = {};
+  if(token){ payload = jwtDecode(token)}
     const [currentPage, setCurrentPage] = useState(1);
    const [itemsPerPage] = useState(6);
    const dispatch = useDispatch();
@@ -38,6 +42,13 @@ export function CourseCarde() {
       setFilteredCourses(courses);
    }, [courses]);
 console.log(currentCourses);
+
+function course_path(){ 
+   if(payload.accountType=='Instructor') 
+     return'/InstPg/CourseDetail/'
+   else
+   return'/StuPg/CourseDetail/'
+   }
 
 return(
 <>
@@ -76,7 +87,7 @@ return(
           <div className="mt-12 mb-8 flex flex-col gap-12">
              <div className="section cards mx-auto border grid md:grid-cols-3 md:px-12 bg-gray-200 text-gray-800">
                 {currentCourses.map((course) => ( 
-                  <Link to={`/usersPg/CourseDetail/${course._id}`}>
+                  <Link to={`${course_path()}${course._id}`}>
                    <div
                       key={course._id}
                       className="card min-h-24 text-sm shadow-lg max-w-sm m-5 mx-auto sm:mx-auto md:m-5 overflow-hidden flex flex-col rounded-lg bg-white p-6 transition duration-300 transform hover:-translate-y-2 hover:shadow-2xl cursor-pointer border border-gray-300"
@@ -231,7 +242,7 @@ return(
                          </li>
                       ))}
                       <button onClick={()=>setCurrentPage(currentPage+1)} 
-                        disabled={currentPage==Math.ceil(filteredCourses / itemsPerPage)? true : false}
+                        disabled={currentPage==Math.ceil(courses.length / itemsPerPage)? true : false}
                         className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button">
                          Next

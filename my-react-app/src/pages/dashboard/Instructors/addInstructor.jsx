@@ -20,6 +20,7 @@ function AddInstructor({show}){
    const [phoneNumber,setPhoneNumber] = useState();
    const [speciality,setSpecialty] = useState();
    const [username,setUsername] = useState();
+   const [courses,setCourse] = useState([])
 
    const uploadImage = async () => {
       const data = new FormData();
@@ -60,7 +61,7 @@ function AddInstructor({show}){
       const secureUrl = await uploadImage(); // Call uploadImage function
       if (secureUrl) {
          dispatch(addInstructor({name : name, password: password, email : email, phonenumber : phoneNumber,
-            specialite: speciality, username: username, Image:secureUrl}))
+            specialite: speciality, username: username, Image:secureUrl, courses : courses}))
        }
        }
 

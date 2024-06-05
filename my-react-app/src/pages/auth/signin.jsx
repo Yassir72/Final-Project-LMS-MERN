@@ -28,10 +28,10 @@ export function SignInUser() {
       const token = response.data.token;
       localStorage.setItem("token", token); 
       if(response.data.role==='Student'){
-      navigate("/usersPg/StudentProfile");
+      navigate("/StuPg/StudentProfile");
       }
       else { 
-        navigate("/usersPg/InstructorProfile");
+        navigate("/InstPg/InstructorProfile");
       }
       setSuccessMsg('Login Successful!');
       setShowSuccess(true);
