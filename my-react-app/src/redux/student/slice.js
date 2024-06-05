@@ -57,6 +57,16 @@ export const getStudent = createAsyncThunk(
     }
 });
 
+export const enroll =createAsyncThunk('student/enrollStu' , async({studentId , courseId} , {rejectWithValue})=>{
+try{
+    const res = await axios.post('http://localhost:3000/student/enroll', { studentId , courseId })
+    return res.data;
+}
+catch (error){
+    return rejectWithValue(error.res.data)
+}
+})
+
 const studentSlice = createSlice({
     name : 'student',
     initialState : { students : [] , isloading : false, error : null,
@@ -133,6 +143,18 @@ const studentSlice = createSlice({
             state.isloading = false;
             state.error = action.error.message;
         })
+        .addCase(enroll.fulfilled, (state, action) => {
+            // state.students=state.students.courses.push(action.payload.courses);
+            state.isloading = false;
+            state.error = false;
+          })
+          .addCase(enroll.rejected, (state, action) => {
+            state.isloading = false;
+            state.error = action.error.message;
+          })
+          .addCase(enroll.pending, (state) => {
+            state.status = 'loading';
+          })
         }
     })
   

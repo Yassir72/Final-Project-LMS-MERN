@@ -11,6 +11,7 @@ export function CoursesPage() {
    const [currentPage, setCurrentPage] = useState(1);
    const [itemsPerPage] = useState(3);
    const dispatch = useDispatch();
+   const { students, isLoading, error } = useSelector((state) => state.students);
    const { courses } = useSelector((state) => state.courses);
    const { categorys } = useSelector((state) => state.categorys);
    const [searchItem, setSearchItem] = useState('');
@@ -64,7 +65,7 @@ export function CoursesPage() {
             ))}
          </div>
 
-         <CourseCarde/>
+         <CourseCarde client={students._id}/>
          <CardeCategory />
          <FooterPages />
       </>

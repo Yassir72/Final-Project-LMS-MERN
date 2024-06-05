@@ -8,7 +8,7 @@ import { getStudent } from "./redux/student/slice"
 const ProtectedStudent = () => {
     const { isLoading, loggedIn } = useSelector(state => state.students)
     const token = localStorage.getItem("token")
-
+    console.log("2");
     if (!token) return <Navigate to="/usersPg/signin" />
 
     axiosInstance.interceptors.request.use(function (config) {
