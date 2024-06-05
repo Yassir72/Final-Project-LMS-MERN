@@ -1,44 +1,65 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrder, removeCourse } from '../../redux/cartSlice';
+import { setCart, clearCart, fetchCart, removeCourseFromCart, fetchCartByClientId } from '../../redux/cartSlice';
+import Header from '../layout/header.jsx';
+import FooterPage from '../layout/footerPages.jsx';
+import { Link } from 'react-router-dom';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import CheckoutForm from '../payment/checkout';
+
+const stripePromise = loadStripe('pk_test_51PL0xDRwmrKMd7zLBpbOLYaoiIYMJeGsSBhSHlbqzcznom6yzAfVwXhZrX4b0tAxELOInSm9EmLYS3rL2KQ76jMa00HBC7L8R0');
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
-  const { course, totalAmount } = useSelector((state) => state.cart);
-  const[orderId]=useState("6638ac8a31ddb0b53bca0fe0")
+  const { students } = useSelector((state) => state.students);
+  const { courses, totalPrice, client } = useSelector((state) => state.cart);
+  const [showPaymentPage, setShowPaymentPage] = useState(false);
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/order/getOrder/${orderId}`);
-        console.log(response);
-        dispatch(setOrder(response.data.course));
-      } catch (error) {
-        console.error('Error fetching the order:', error);
-      }
-    };
-
-    fetchOrder();
-  }, [dispatch]);
+    if (students._id) {
+      dispatch(fetchCartByClientId(students._id));
+    }
+  }, [dispatch, students._id]);
 
   const handleRemoveCourse = (courseId) => {
-    dispatch(removeCourse(courseId));
+    dispatch(removeCourseFromCart({ client: students._id, courseId }));
   };
 
-  if (!course) return <p>Loading...</p>;
+  const handleProceedToCheckout = () => {
+    setShowPaymentPage(true);
+  };
+
+  const handleClosePaymentPage = () => {
+    setShowPaymentPage(false);
+  };
+
+  if (!courses) return <p>Loading...</p>;
 
   return (
-    <section className="bg-white py-8 w-full px-10 antialiased dark:bg-gray-900 md:py-16">
-      <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <div className='flex md:gap-6'>
-        <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-4xl">Shopping Cart</h2>
-        <svg className="h-10 w-10 text-gray-900 mt-4 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="9" cy="21" r="1" />  <circle cx="20" cy="21" r="1" />  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
-        </div>
-        <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
-          <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-5xl">
-            <div className="space-y-6">
-              {course.map((course) => (
+    <>
+      <Header />
+      <section className="bg-white py-8 w-full px-10 antialiased dark:bg-gray-900 md:py-16">
+        <div className="max-w-screen-xl mx-auto px-4 2xl:px-4">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-4xl mb-8 flex items-center">
+            <svg
+              className="h-6 w-6 text-gray-900 dark:text-white mr-2"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path d="M3 3h18l-2 13H5L3 3zm0 0L1 5v2h22V5l-2-2z" />
+              <path d="M6 21a2 2 0 11-4 0 2 2 0 014 0zm16 0a2 2 0 11-4 0 2 2 0 014 0zM5 8h14M5 12h14M5 16h14" />
+            </svg>
+            Shopping Cart
+          </h2>
+          <div className="flex flex-wrap lg:flex-nowrap lg:gap-6">
+            <div className="w-full lg:w-3/4 space-y-6">
+              {courses.map((course) => (
                 <div key={course._id} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                   <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
                     <a href="#" className="shrink-0 md:order-1">
@@ -68,62 +89,60 @@ const ShoppingCart = () => {
                 </div>
               ))}
             </div>
-          </div>
-          <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-            <div className="space-y-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-              <p className="text-xl font-semibold text-gray-900 dark:text-white">Order summary</p>
-              <div className="space-y-4">
-                <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
-                  <dt className="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                  <dd className="text-base font-bold text-gray-900 dark:text-white">${totalAmount}</dd>
-                </dl>
-              </div>
-              <a
-                href="#"
-                className="flex w-full items-center justify-center rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Proceed to Checkout
-              </a>
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">or</span>
-                <a
-                  href="#"
-                  title=""
-                  className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500"
-                >
-                  Continue Shopping
-                  <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="voucher" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                    Do you have a voucher or gift card?
-                  </label>
-                  <input
-                    type="text"
-                    id="voucher"
-                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                    placeholder=""
-                    required
-                  />
+            <div className="w-full lg:w-1/4">
+              <div className="space-y-4 mb-6">
+                <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <p className="text-base font-medium text-gray-900 dark:text-white">Subtotal</p>
+                      <p className="text-end text-base font-medium text-gray-900 dark:text-white">${totalPrice}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="inline-flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-4 text-base font-semibold text-white transition-all hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:ring-offset-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-offset-gray-800"
+                      onClick={handleProceedToCheckout}
+                    >
+                      Proceed to Checkout
+                    </button>
+                    <Link
+                      to="/usersPg/CoursesPage"
+                      className="block text-center mt-4 text-sm font-medium text-gray-900 underline hover:underline dark:text-white"
+                    >
+                    Or Continue Shopping
+                    </Link>
+                    <label className="block font-medium text-gray-900 dark:text-white" htmlFor="promo-code">
+                      Promo Code
+                    </label>
+                    <input
+                      type="text"
+                      id="promo-code"
+                      className="w-full rounded-lg border border-gray-300 p-2 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      placeholder="Enter promo code"
+                    />
+                  </div>
                 </div>
-                <button
-                  type="submit"
-                  className="flex w-full items-center justify-center rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white hover:bg-black focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                >
-                  Apply Code
-                </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {showPaymentPage && (
+        <section className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <button onClick={handleClosePaymentPage} className="float-right text-gray-500 hover:text-gray-900">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h2 className="text-xl font-semibold mb-4">Payment</h2>
+            <Elements stripe={stripePromise}>
+              <CheckoutForm clientId={students._id} totalPrice={totalPrice} />
+            </Elements>
+          </div>
+        </section>
+      )}
+      <FooterPage />
+    </>
   );
 };
 

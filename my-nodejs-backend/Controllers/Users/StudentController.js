@@ -3,6 +3,7 @@ const StudentModel = require("../../Models/StudentSchema")
 const CourseModel = require('../../Models/CourseSchema');
 // const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
+const CartModel = require('../../Models/CartSchema');
 
 const register = async (req, res) => {
     const { firstname, lastname, email, password, username, phoneNumber,Image } = req.body;
@@ -127,11 +128,18 @@ const getStudentById =async (req, res) => {
 
 
 const enroll = async (req, res) => {
+        let message=[]
+        let messageError=[]
     try {
         const { studentId, courseId } = req.body;
+        
 
         // Trouver l'étudiant par ID
-        const student = await StudentModel.findById(studentId);
+        const student = await StudentModel.findById(studentId).populate({
+            path:'courses',
+            model:'Course',
+            select:'Image Title Price'
+        });
 
         // Vérifier si l'étudiant existe
         if (!student) {
@@ -139,7 +147,8 @@ const enroll = async (req, res) => {
         }
 
         // Trouver le cours par ID
-        const course = await CourseModel.findById(courseId);
+        for(let i=0;i<courseId.length;i++){
+        const course = await CourseModel.findById(courseId[i]);
 
         // Vérifier si le cours existe
         if (!course) {
@@ -147,16 +156,25 @@ const enroll = async (req, res) => {
         }
 
         // Ajouter le cours à la liste des cours de l'étudiant s'il n'est pas déjà inscrit
-        if (!student.courses.includes(courseId)) {
-            student.courses.push(courseId);
-            await student.save();
-            res.status(200).send('Student enrolled in course successfully');
-        } else {
-            res.status(400).send('Student is already enrolled in this course');
+        console.log(student.courses.includes(courseId[i]));
+        let Exist;
+        for(let j=0 ; j<student.courses.length ; j++){
+           if (student.courses[j]._id== courseId[i])
+            Exist=true
         }
+        if (!Exist) {
+            student.courses.push(courseId[i]);
+            await student.save();
+            message.push(`Student enrolled in ${course.Title} successfully`);
+        } else {
+            messageError.push(`Student is already enrolled in ${course.Title}`);
+        }
+    }
     } catch (error) {
         res.status(500).send(error.message);
     }
+   
+    res.send({message,messageError})
 }
 
 module.exports = { register, login, logout, updateStudent, deleteStudent, getStudents, getStudentById,enroll }
