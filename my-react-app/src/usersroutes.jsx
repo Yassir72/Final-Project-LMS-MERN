@@ -5,6 +5,8 @@ import ShoppingCart from "./widgets/shopping/shoppingCart";
 import { StudentProfile } from "@/pages/userPages";
 import InstructorProfile from "./pages/userPages/instructorProfile";
 import { Start } from "@/pages/userPages";
+import { Description } from "@/pages/userPages";
+import { Payement } from "@/pages/userPages";
 
 export const usersroutes = [
   {
@@ -45,6 +47,14 @@ export const usersroutes = [
       {
         path: "/StartCourse",
         element: <Start/>,
+      },
+      {
+        path: "/DescriptionCourse",
+        element: <Description/>,
+      },
+      {
+        path: "/Payement",
+        element: <Payement/>,
       },
 
       

@@ -28,7 +28,6 @@ const ProtectedStudent = () => { console.log("hh");
         
     }, [])
 
-
     return !isLoading && (loggedIn ? <Outlet /> : <Navigate to="/usersPg/signin" />)
 }
 

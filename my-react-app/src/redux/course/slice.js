@@ -17,9 +17,10 @@ export const getcoursebyID = createAsyncThunk('course/getcoursebyid', async (cou
         const data = res.data;
         return data;
     } catch (error) {
-        console.log(error);
+        return thunkAPI.rejectWithValue(error.response.data);
     }
 });
+
 
 export const addCourse = createAsyncThunk('course/addCourse', async({Title, Description, Price, Image, Videos})=>{
     try { 
