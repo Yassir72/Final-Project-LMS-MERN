@@ -16,6 +16,7 @@ function EditAdmin({show,EditContent}){
    const [image,setImage] = useState(EditContent.Image);
    const [email,setEmail] = useState(EditContent.Email);
    const [name,setName] = useState(EditContent.Name);
+   const [imageEdited,setImageEdited] = useState(false);
 
    const uploadImage = async () => {
       const data = new FormData();
@@ -47,6 +48,7 @@ function EditAdmin({show,EditContent}){
     }
     ;
     const Handlerphoto = (event) => {
+      setImageEdited(true);
       const file = event.target.files[0];
       console.log(file)
       setImage(file);
@@ -54,11 +56,14 @@ function EditAdmin({show,EditContent}){
   
     };
 
-   async function editButton(){ 
-      const secureUrl = await uploadImage(); // Call uploadImage function
-   if (secureUrl) {
-      dispatch(editAdmin({id : EditContent._id, email: email, name : name, Image: secureUrl}))
-    }
+   async function editButton(){  
+      if(imageEdited){ 
+         const secure_url = await uploadImage();
+         setImage(secure_url);
+      }
+   
+      dispatch(editAdmin({id : EditContent._id, email: email, name : name, Image: image}))
+   
    }
 
     return (

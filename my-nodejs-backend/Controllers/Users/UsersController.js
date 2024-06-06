@@ -99,7 +99,8 @@ const login = async (req, res) => {
             }
         })
         }
-        if(role !='Instructor'){
+
+        if(role !='Instructor' && role !='Student'){
             return res.status(404).json({ error: 'Email or password incorrect!' });
         }
 

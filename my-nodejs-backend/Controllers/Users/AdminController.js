@@ -108,7 +108,7 @@ const addAdmin = async (req, res) => {  console.log(req.body);
     
 const UpdateAdmin = async (req, res) => { console.log("AA");
         
-        const { id, name, email, phonenumber, location ,resumer,image} = req.body
+        const { id, name, email, phonenumber, location ,resumer,Image} = req.body
         await AdminModel.findOneAndUpdate({ _id: id }, {
             $set: {
                 Name: name,
@@ -116,7 +116,7 @@ const UpdateAdmin = async (req, res) => { console.log("AA");
                 Phonenumber :phonenumber,
                 Location : location, 
                 Resumer : resumer,
-                Image : image,
+                Image : Image,
             }
         },
             { new: true })

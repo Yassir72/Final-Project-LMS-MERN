@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Dashboard, Auth, UsersPg } from "@/layouts";
-import { CoursesPage, Description, StudentProfile } from "./pages/userPages";
+import { CoursesPage, Description, Start, StudentProfile } from "./pages/userPages";
 import AuthProvider from './context/AuthProvider';
 import Protected from "./Protected";
 import ProtectedStudent from "./ProtectedStudent";
@@ -8,6 +8,7 @@ import ProtectedInstructor from "./ProtectedInstructor";
 import InstructorProfile from "./pages/userPages/instructorProfile";
 import CourseDetail from "./pages/userPages/CourseDetail";
 import { jwtDecode } from "jwt-decode"
+import ShoppingCart from "./widgets/shopping/shoppingCart";
 
 function App() {
 //   let payload=null;
@@ -79,6 +80,8 @@ function App() {
           <Route path="/StuPg/StudentProfile" element={<StudentProfile />} />
           <Route path="/StuPg/DescriptionCourse/courses/:courseId" element={<Description />} />
           <Route path="/StuPg/CourseDetail/:id" element={<CourseDetail />} />
+          <Route path="/StuPg/StartCourse" element={<Start />} />
+          <Route path="/StuPg/Shop" element={<ShoppingCart />} />
         </Route>
         
         <Route path="/auth/*" element={<Auth />} />

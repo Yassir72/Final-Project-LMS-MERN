@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Rating } from "@material-tailwind/react";
+import { useNavigate,Link } from "react-router-dom";
 
 export function CoursesStartCard() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,13 +40,14 @@ export function CoursesStartCard() {
             <div className="mt-12 mb-8 flex flex-col gap-12">
               <div className="section cards mx-auto border grid md:grid-cols-3 md:px-12 bg-gray-200 text-gray-800">
                 {currentCourses.map((course) => (
+                  <Link to={`/StuPg/CourseDetail/${course._id}`}>
                   <div
                     key={course._id}
                     className="card min-h-24 text-sm shadow-lg max-w-sm m-5 mx-auto sm:mx-auto md:m-5 overflow-hidden flex flex-col rounded-lg bg-white p-6 transition duration-300 transform hover:-translate-y-2 hover:shadow-2xl cursor-pointer border border-gray-300"
                   >
                     <a
                       target="_self"
-                      href={course.Description}
+                      
                       className="absolute opacity-0 top-0 right-0 left-0 bottom-0"
                     ></a>
                     <div className="relative mb-4 rounded-2xl">
@@ -56,7 +58,7 @@ export function CoursesStartCard() {
                       />
                       <a
                         className="flex justify-center items-center bg-black bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
-                        href={course.Description}
+                        
                         target="_self"
                         rel="noopener noreferrer"
                       >
@@ -113,7 +115,7 @@ export function CoursesStartCard() {
                     </div>
                     <h3 className="font-medium text-xl leading-8">
                       <a
-                        href={course.Image}
+                       
                         className="block relative group-hover:text-black transition-colors duration-200"
                       >
                         {course.Title}
@@ -121,6 +123,7 @@ export function CoursesStartCard() {
                     </h3>
                     <div className="text-xs">{course.Description}</div>
                   </div>
+                  </Link>
                 ))}
               </div>
               <div className="flex justify-center">

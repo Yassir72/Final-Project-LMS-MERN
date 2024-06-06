@@ -97,15 +97,7 @@ export function SignInUser() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Typography color="blue-gray" className="mb-1 font-medium">
-             Are you an Instructor or a Student ?
-            </Typography>
-            <select name="role" class=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400" 
-               onChange={(e)=>{setRole(e.target.value)}}>
-                  <option value="">---</option>
-                  <option value="Student">Student</option>
-                  <option value="Instructor">Instructor</option>
-               </select>
+            
             
           </div>
           <Button type="submit" className="mt-6 w-full">
